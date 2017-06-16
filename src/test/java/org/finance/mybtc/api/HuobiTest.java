@@ -24,11 +24,6 @@ import org.nutz.json.Json;
  */
 public class HuobiTest {
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
-
 	static final String API_KEY = "8f06a5ef-378779fd-aced6973-a6b4e";
 	static final String API_SECRET = "64a03733-5fc15c34-3d8e44e7-afb04";
 

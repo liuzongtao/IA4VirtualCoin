@@ -15,11 +15,6 @@ import org.junit.Test;
 public class Btc_eTest {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetLastPrice() {
 		TradeApi ta = new TradeApi();
 		ta.ticker.addPair("btc_usd"); // add btc_usd pair to ticker method

@@ -17,9 +17,15 @@ public enum EBTC_EPairType {
 
 	LTC_BTC("ltc_btc"),
 	
+	BTC_LTC("btc_ltc"),
+	
 	ETH_BTC("eth_btc"),
 	
+	BTC_ETH("btc_eth"),
+	
 	ETH_LTC("eth_ltc"),
+	
+	LTC_ETH("ltc_eth"),
 	;
 
 	private String value;
@@ -31,5 +37,4 @@ public enum EBTC_EPairType {
 	public String getValue() {
 		return value;
 	}
-
 }

@@ -6,6 +6,7 @@ package org.finance.mybtc.apiManager.impl;
 import org.finance.mybtc.api.huobi.btc_ltc.EHuobiCoinType;
 import org.finance.mybtc.api.huobi.btc_ltc.HuobiAccountInfo;
 import org.finance.mybtc.api.huobi.btc_ltc.WithdrawCoinResult;
+import org.finance.mybtc.constant.Const;
 
 /**
  * @author zongtao liu
@@ -15,7 +16,7 @@ public class HuobiBtcImpl extends AHuobiBtcLtcCoin {
 
 	private static final String WITHDRAW_ADDR = "1CrxSJ5oB44JvjxNEKTMVcdP2FAdJmaLtG";
 
-	private static final float WITHDRAW_FEE = 0.0001f;
+	
 
 
 	/*
@@ -42,7 +43,7 @@ public class HuobiBtcImpl extends AHuobiBtcLtcCoin {
 	 */
 	@Override
 	public boolean withdrawCoin(float amount) {
-		WithdrawCoinResult result = withdrawCoin(amount, WITHDRAW_ADDR, WITHDRAW_FEE);
+		WithdrawCoinResult result = withdrawCoin(amount, WITHDRAW_ADDR, Const.HUOBI_BTC_WITHDRAW_FEE);
 		if (result != null && result.getCode() == 200) {
 			return true;
 		}

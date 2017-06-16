@@ -4,9 +4,10 @@
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/packaged"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resouces"/>
         <property name="context-root" value="mybtc"/>
         <property name="java-output-path" value="/mybtc/target/classes"/>
-        <property name="component.exclusion.patterns" value="src/main/resources/packaged/**"/>
+        <property name="component.exclusion.patterns"/>
     </wb-module>
 </project-modules>

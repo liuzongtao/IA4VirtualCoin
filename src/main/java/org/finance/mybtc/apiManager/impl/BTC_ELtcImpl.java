@@ -14,8 +14,6 @@ public class BTC_ELtcImpl extends ABTC_ECoin {
 	
 	private static final String WITHDRAW_ADDR = "LTNrznxKoMcF31zaX9fRagKHuBquapTPPa";
 
-	private static final float WITHDRAW_FEE = 0.001f;
-
 	/*
 	 * (non-Javadoc)
 	 * 

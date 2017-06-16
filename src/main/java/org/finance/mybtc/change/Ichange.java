@@ -9,7 +9,7 @@ package org.finance.mybtc.change;
  */
 public interface Ichange {
 	
-	public float preChange();
+	public float preChange(float totalMoney,float  fromCoinBuyPrice,float toCoinSellPrice,float otherPfChangePrice);
 	
 	
 

@@ -5,7 +5,7 @@
 	<artifactId>mybtc</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mybtc Maven Webapp</name>
+	<name>mybtc Maven jar</name>
 	<url>http://maven.apache.org</url>
 
 
@@ -14,6 +14,16 @@
 	</properties>
 
 	<build>
+
+		<finalName>mybtc</finalName>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<resources>
+			<!-- 控制资源文件的拷贝 -->
+			<resource>
+				<directory>src/main/resources/packaged</directory>
+				<targetPath>${project.build.directory}</targetPath>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -28,20 +38,16 @@
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
 				<configuration>
-					<escapeString>\</escapeString>
-					<warName>mybtc</warName>
-					<warSourceExcludes>src/main/resources/packaged/**</warSourceExcludes>
-					<webResources>
-						<resource>
-							<directory>src/main/resources/packaged</directory>
-							<targetPath>WEB-INF/classes</targetPath>
-							<filtering>true</filtering>
-						</resource>
-					</webResources>
-					<warSourceDirectory>src/main/webapp</warSourceDirectory>
-					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>org.finance.mybtc.main.MainTools</mainClass>
+						</manifest>
+					</archive>
 				</configuration>
 			</plugin>
 		</plugins>
