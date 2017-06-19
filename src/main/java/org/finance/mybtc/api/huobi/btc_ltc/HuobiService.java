@@ -430,7 +430,11 @@ public class HuobiService extends Base {
 		Response response = Http.get(url);
 		String content = response.getContent();
 		if(Strings.isNotBlank(content)){
-			result = Json.fromJson(ActualTickerBean.class, content);
+			try {
+				result = Json.fromJson(ActualTickerBean.class, content);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return result;
 	}

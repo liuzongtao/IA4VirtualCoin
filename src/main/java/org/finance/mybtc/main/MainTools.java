@@ -17,6 +17,7 @@ import org.finance.mybtc.change.impl.Eth_BtcChangeImpl;
 import org.finance.mybtc.change.impl.Eth_LtcChangeImpl;
 import org.finance.mybtc.change.impl.Ltc_BtcChangeImpl;
 import org.finance.mybtc.change.impl.Ltc_EthChangeImpl;
+import org.finance.mybtc.utils.DateUtil;
 import org.nutz.log.Log;
 import org.nutz.log.Logs;
 
@@ -56,14 +57,13 @@ public class MainTools {
 
 		while (true) {
 			int result = test();
-			long time = 30 * 1000l;
+			long time = 60 * 1000l;
 			if (result == 1) {
 				time = 30 * 60 * 1000l;
 			}
 			try {
 				Thread.sleep(time);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -132,17 +132,17 @@ public class MainTools {
 			maxProfit = e2lProfit;
 		}
 
-		float purpose = 3;
-		if (maxProfit > purpose) {
-			log.info(new Date() + " ; maxProfit == " + maxProfit);
-			result = 1;
-		}
-		log.info(new Date() + " ; b2lProfit == " + b2lProfit + " ; l2bProfit == " + l2bProfit
-				+ " ; b2eProfit == " + b2eProfit + " ; e2bProfit == " + e2bProfit + " ; l2eProfit == " + l2eProfit
-				+ " ; l2ebProfit == " + e2lProfit);
-//		System.out.println(new Date() + " ; b2lProfit == " + b2lProfit + " ; l2bProfit == " + l2bProfit
-//				+ " ; b2eProfit == " + b2eProfit + " ; e2bProfit == " + e2bProfit + " ; l2eProfit == " + l2eProfit
-//				+ " ; l2ebProfit == " + e2lProfit);
+//		float purpose = 3;
+//		if (maxProfit > purpose) {
+//			log.info(new Date() + " ; maxProfit == " + maxProfit);
+//			log.info(new Date() + " ; b2lProfit == " + b2lProfit + " ; l2bProfit == " + l2bProfit
+//					+ " ; b2eProfit == " + b2eProfit + " ; e2bProfit == " + e2bProfit + " ; l2eProfit == " + l2eProfit
+//					+ " ; l2ebProfit == " + e2lProfit);
+//			result = 1;
+//		}
+		
+		log.info(DateUtil.getCurDateTime() + " ; " + b2lProfit + " ; " + l2bProfit + " ; " + b2eProfit + " ; " + e2bProfit + " ; "
+				+ l2eProfit + " ; " + e2lProfit);
 		return result;
 	}
 
