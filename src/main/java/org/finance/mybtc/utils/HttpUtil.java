@@ -3,9 +3,11 @@
  */
 package org.finance.mybtc.utils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.nutz.http.Cookie;
+import org.nutz.http.Header;
 import org.nutz.http.Http;
 import org.nutz.http.Request;
 import org.nutz.http.Request.METHOD;
@@ -20,11 +22,15 @@ import org.nutz.lang.Strings;
 public class HttpUtil {
 
 	public static Response httpsPost(String url) {
-		return httpsPost(url, null, null);
+		return https(url, null, null, METHOD.POST, null);
 	}
 
 	public static Response httpsPost(String url, Map<String, Object> params) {
-		return httpsPost(url, params, null);
+		return https(url, params, null, METHOD.POST, null);
+	}
+
+	public static Response httpsPost(String url, Map<String, Object> params, Header header) {
+		return https(url, params, null, METHOD.POST, header);
 	}
 
 	public static Response httpsPost(String url, Map<String, Object> params, Cookie cookie) {
@@ -62,10 +68,17 @@ public class HttpUtil {
 	}
 
 	private static Response https(String url, Map<String, Object> params, Cookie cookie, METHOD method) {
-		Request req = Request.create(url, method);
-		if (params != null) {
-			req.setParams(params);
+		return https(url, params, cookie, method, null);
+	}
+
+	private static Response https(String url, Map<String, Object> params, Cookie cookie, METHOD method, Header header) {
+		if (params == null) {
+			params = new HashMap<String, Object>();
 		}
+		if (header == null) {
+			header = Header.create();
+		}
+		Request req = Request.create(url, method, params, header);
 		Response response = null;
 		try {
 			Sender sender = Sender.create(req);
@@ -75,7 +88,6 @@ public class HttpUtil {
 			}
 			response = sender.send();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return response;

@@ -8,7 +8,7 @@ package org.finance.mybtc.api.huobi.btc_ltc;
 import java.math.BigDecimal;
 import java.util.TreeMap;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.finance.mybtc.api.huobi.beans.ActualTickerBean;
 import org.finance.mybtc.utils.DecimalUtil;
 import org.nutz.http.Http;

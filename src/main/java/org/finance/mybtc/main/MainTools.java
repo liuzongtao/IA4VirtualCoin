@@ -55,18 +55,26 @@ public class MainTools {
 		// System.out.println("bid price == " + arr[0]);
 		// }
 
-		while (true) {
-			int result = test();
-			long time = 60 * 1000l;
-			if (result == 1) {
-				time = 30 * 60 * 1000l;
-			}
-			try {
-				Thread.sleep(time);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+//		while (true) {
+//			int result = test();
+//			long time = 60 * 1000l;
+//			if (result == 1) {
+//				time = 30 * 60 * 1000l;
+//			}
+//			try {
+//				Thread.sleep(time);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+		
+		HuobiCoinFactory huobiFactory = HuobiCoinFactory.getInstance();
+		IVirtualCoin cnyInfo = huobiFactory.getVirtualCoin(EHuobiSymbol.CNY_OLD);
+		float totalMoney = cnyInfo.getCoinNum();
+		System.out.println(totalMoney);
+		IVirtualCoin ltcInfo = huobiFactory.getVirtualCoin(EHuobiSymbol.LTC);
+		boolean buyMarket = ltcInfo.buyMarket(totalMoney);
+		System.out.println(buyMarket);
 	}
 
 	public static int test() {

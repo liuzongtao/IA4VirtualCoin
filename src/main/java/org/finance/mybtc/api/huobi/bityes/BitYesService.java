@@ -7,7 +7,7 @@ package org.finance.mybtc.api.huobi.bityes;
 
 import java.util.TreeMap;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author yanjg 2014年11月22日

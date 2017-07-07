@@ -68,7 +68,7 @@ public abstract class AHuobiBtcLtcCoin extends AHuobiOldArea {
 			String buyMarketRes = service.buyMarket(getCoinType(), String.valueOf(amount), null, null);
 			if (Strings.isNotBlank(buyMarketRes)) {
 				SellOrBuyResult res = Json.fromJson(SellOrBuyResult.class, buyMarketRes);
-				if (res != null && res.getResult() == SellOrBuyResult.RESULT_SUCCESS) {
+				if (res != null && Strings.equals(res.getResult(), SellOrBuyResult.RESULT_SUCCESS)) {
 					result = true;
 				}
 			}
