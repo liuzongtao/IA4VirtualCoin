@@ -6,6 +6,7 @@
 package org.finance.mybtc.api.huobi.btc_ltc;
 
 import org.finance.mybtc.apiManager.IVirtualCoin;
+import org.finance.mybtc.configs.Configs;
 
 /**
  * @author yanjg 2014年11月22日
@@ -13,7 +14,7 @@ import org.finance.mybtc.apiManager.IVirtualCoin;
 public class HuobiMain {
 
 	public static void main(String[] args) {
-		HuobiService service = new HuobiService(IVirtualCoin.API_KEY, IVirtualCoin.API_SECRET);
+		HuobiService service = new HuobiService(Configs.API_CONFIG_HUOBI.getApiKey(), Configs.API_CONFIG_HUOBI.getApiSecret());
 		try {
 			// // 提交限价单接口 1btc 2ltc
 			// System.out.println(service.buy(1, "2281.52", "0.001", null,

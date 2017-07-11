@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.finance.mybtc.api.huobi.eth.response.Balance;
 import org.finance.mybtc.api.huobi.eth.response.BalanceInfo;
+import org.finance.mybtc.apiManager.ESymbol;
 import org.nutz.lang.Strings;
 
 /**
@@ -57,7 +58,7 @@ public class HuobiCny4NewAreaImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#buyMarket(float)
 	 */
 	@Override
-	public boolean buyMarket(float amount) {
+	public boolean buyMarket(ESymbol fromSymbol,float amount) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -68,7 +69,7 @@ public class HuobiCny4NewAreaImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#sellMarket(float)
 	 */
 	@Override
-	public boolean sellMarket(float amount) {
+	public boolean sellMarket(ESymbol toSymbol,float amount) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -79,7 +80,7 @@ public class HuobiCny4NewAreaImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#withdrawCoin(float)
 	 */
 	@Override
-	public boolean withdrawCoin(float amount) {
+	public boolean withdrawCoin(float amount,String address) {
 		// TODO Auto-generated method stub
 		return false;
 	}

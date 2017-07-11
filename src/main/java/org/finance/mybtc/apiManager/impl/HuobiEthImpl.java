@@ -9,8 +9,8 @@ import org.finance.mybtc.api.huobi.beans.EHuobiSymbol;
 import org.finance.mybtc.api.huobi.btc_ltc.EHuobiStepType;
 import org.finance.mybtc.api.huobi.eth.response.Balance;
 import org.finance.mybtc.api.huobi.eth.response.BalanceInfo;
-import org.finance.mybtc.api.huobi.eth.response.Symbol;
 import org.finance.mybtc.api.huobi.eth.response.Tick;
+import org.finance.mybtc.apiManager.ESymbol;
 import org.nutz.lang.Strings;
 
 /**
@@ -18,8 +18,6 @@ import org.nutz.lang.Strings;
  *
  */
 public class HuobiEthImpl extends AHuobiNewArea {
-
-	private static final String WITHDRAW_ADDR = "0x8c8ab6567b9c60298592932a3d53ee5c0714a47d";
 
 	/*
 	 * (non-Javadoc)
@@ -74,7 +72,7 @@ public class HuobiEthImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#buyMarket(float)
 	 */
 	@Override
-	public boolean buyMarket(float amount) {
+	public boolean buyMarket(ESymbol fromSymbol,float amount) {
 		long accountId = getAccountId();
 		if (accountId == 0) {
 			return false;
@@ -92,7 +90,7 @@ public class HuobiEthImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#sellMarket(float)
 	 */
 	@Override
-	public boolean sellMarket(float amount) {
+	public boolean sellMarket(ESymbol toSymbol,float amount) {
 		long accountId = getAccountId();
 		if (accountId == 0) {
 			return false;
@@ -110,24 +108,12 @@ public class HuobiEthImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#withdrawCoin(float)
 	 */
 	@Override
-	public boolean withdrawCoin(float amount) {
-		long withdrawId = client.withdraw(BalanceInfo.CURRENCY_ETH, WITHDRAW_ADDR, String.valueOf(amount));
+	public boolean withdrawCoin(float amount, String address) {
+		long withdrawId = client.withdraw(BalanceInfo.CURRENCY_ETH, address, String.valueOf(amount));
 		if (withdrawId > 0) {
 			return true;
 		}
 		return false;
-	}
-
-	private String getSymbol() {
-		String symbol = null;
-		List<Symbol> symbols = client.getSymbols();
-		for (Symbol tmpSymbol : symbols) {
-			if (Strings.equals(tmpSymbol.symbol, EHuobiSymbol.ETH.getValue())) {
-				symbol = tmpSymbol.symbol;
-				break;
-			}
-		}
-		return symbol;
 	}
 
 	private Tick getTick() {

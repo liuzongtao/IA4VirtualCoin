@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.finance.mybtc.change.impl;
+package org.finance.mybtc.change.impl4HuobiAndBitfinex;
 
 import org.finance.mybtc.change.AChange;
 import org.finance.mybtc.constant.Const;
@@ -49,7 +49,7 @@ public class Btc_EthChangeImpl extends AChange {
 	 */
 	@Override
 	public float getOtherPfWithdrawFee() {
-		return Const.BTC_E_ETH_WITHDRAW_FEE;
+		return Const.BITFINEX_ETH_WITHDRAW_FEE;
 	}
 
 }

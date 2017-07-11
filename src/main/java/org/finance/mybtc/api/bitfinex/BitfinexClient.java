@@ -251,6 +251,9 @@ public class BitfinexClient {
 	
 	private Map<String, Object> getNewParams(Map<String, String> params){
 		Map<String, Object> newParams = new HashMap<String, Object>();
+		if(params == null){
+			return newParams;
+		}
 		for(Entry<String, String> entry : params.entrySet()){
 			newParams.put(entry.getKey(), entry.getValue());
 		}
@@ -260,21 +263,12 @@ public class BitfinexClient {
 	private Header createHeader(String urlPath,Map<String, String> params) {
 		Header header = Header.create();
 		try {
-//			Map<String, String> headerMap = new HashMap<String, String>();
-//			headerMap.put("Content-Typ", "application/json");
-//			headerMap.put("Accept", "application/json");
-			Map<String, String> headerMap = new HashMap<String, String>();
-			if (Strings.isNotBlank(apiKey) && Strings.isNotBlank(apiKeySecret)) {
-				
-				createBaseHear(urlPath, headerMap);
-				if(params!= null && params.size() > 0){
-					headerMap.putAll(params);
-					createBaseHear(urlPath, headerMap);
-				}
-				System.out.println("2===" + new Gson().toJson(headerMap));
-//				System.out.println("2===" + new Gson().toJson(headerMap, JsonFormat.compact()));
+			if(params == null){
+				params = new HashMap<String, String>();
 			}
-			
+			if (Strings.isNotBlank(apiKey) && Strings.isNotBlank(apiKeySecret)) {
+				createBaseHear(urlPath, params);
+			}
 			params.put("Content-Typ", "application/json");
 			params.put("Accept", "application/json");
 			
@@ -285,13 +279,32 @@ public class BitfinexClient {
 		return header;
 	}
 	
+//	private Header createHeader(String urlPath,Map<String, String> params) {
+//		Header header = Header.create();
+//		try {
+//			Map<String, String> headerMap = new HashMap<String, String>();
+//			if (Strings.isNotBlank(apiKey) && Strings.isNotBlank(apiKeySecret)) {
+//				
+//				createBaseHear(urlPath, headerMap);
+//				if(params!= null && params.size() > 0){
+//					headerMap.putAll(params);
+//					createBaseHear(urlPath, headerMap);
+//				}
+//			}
+//			params.put("Content-Typ", "application/json");
+//			params.put("Accept", "application/json");
+//			header.addAll(params);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return header;
+//	}
+	
 	private void createBaseHear(String urlPath,Map<String, String> params){
 		try {
 			params.put("request", urlPath);
-			params.put("nonce", "1499417695350");
-//			params.put("nonce", String.valueOf(System.currentTimeMillis()));
+			params.put("nonce", String.valueOf(System.currentTimeMillis()));
 			String jsonEncode = Json.toJson(params, JsonFormat.compact());
-			System.out.println("1===" + jsonEncode);
 			byte[] payload = new Base64().encode(jsonEncode.getBytes("UTF-8"));
 //			String payload = Base64.encodeToString(jsonEncode.getBytes("UTF-8"), false);
 //			String signature = hmacDigest(payload, apiKeySecret, ALGORITHM_HMACSHA384);

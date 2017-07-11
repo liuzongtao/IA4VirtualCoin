@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.finance.mybtc.change.impl;
+package org.finance.mybtc.change.impl4HuobiAndBtce;
 
 import org.finance.mybtc.change.AChange;
 import org.finance.mybtc.constant.Const;
@@ -10,7 +10,7 @@ import org.finance.mybtc.constant.Const;
  * @author zongtao liu
  *
  */
-public class Ltc_BtcChangeImpl extends AChange {
+public class Ltc_EthChangeImpl extends AChange {
 
 	@Override
 	public int getFromDigit() {
@@ -19,7 +19,7 @@ public class Ltc_BtcChangeImpl extends AChange {
 
 	@Override
 	public int getToDigit() {
-		return Const.BTC_DIGIT;
+		return Const.ETH_DIGIT;
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class Ltc_BtcChangeImpl extends AChange {
 
 	@Override
 	public float getOtherPfWithdrawFee() {
-		return Const.BTC_E_BTC_WITHDRAW_FEE;
+		return Const.BTC_E_ETH_WITHDRAW_FEE;
 	}
 
 }

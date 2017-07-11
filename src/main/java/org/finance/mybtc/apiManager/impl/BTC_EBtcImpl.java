@@ -11,10 +11,6 @@ import org.finance.mybtc.api.btc_e.official.EBTC_ESymbol;
  *
  */
 public class BTC_EBtcImpl extends ABTC_ECoin {
-	
-	private static final String WITHDRAW_ADDR = "1MmmNsCEgzqbErAdezceBxaAAsTvmknNqT";
-
-	private static final float WITHDRAW_FEE = 0.001f;
 
 	/*
 	 * (non-Javadoc)
@@ -22,7 +18,7 @@ public class BTC_EBtcImpl extends ABTC_ECoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#withdrawCoin(float)
 	 */
 	@Override
-	public boolean withdrawCoin(float amount) {
+	public boolean withdrawCoin(float amount, String address) {
 		// TODO Auto-generated method stub
 		return false;
 	}

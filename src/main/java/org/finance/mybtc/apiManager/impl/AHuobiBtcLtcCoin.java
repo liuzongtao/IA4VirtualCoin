@@ -7,6 +7,8 @@ import org.finance.mybtc.api.huobi.beans.ActualTickerBean;
 import org.finance.mybtc.api.huobi.btc_ltc.EHuobiCoinType;
 import org.finance.mybtc.api.huobi.btc_ltc.SellOrBuyResult;
 import org.finance.mybtc.api.huobi.btc_ltc.WithdrawCoinResult;
+import org.finance.mybtc.apiManager.ESymbol;
+import org.finance.mybtc.configs.Configs;
 import org.nutz.json.Json;
 import org.nutz.lang.Strings;
 
@@ -46,7 +48,7 @@ public abstract class AHuobiBtcLtcCoin extends AHuobiOldArea {
 	protected WithdrawCoinResult withdrawCoin(float amount, String withdrawAddr, float withdrawFee) {
 		WithdrawCoinResult result = null;
 		try {
-			String res = service.withdrawCoin(getCoinType(), withdrawAddr, amount, TRADE_PWD, null, withdrawFee);
+			String res = service.withdrawCoin(getCoinType(), withdrawAddr, amount, Configs.API_CONFIG_HUOBI.getTradePwd(), null, withdrawFee);
 			if (Strings.isNotBlank(res)) {
 				result = Json.fromJson(WithdrawCoinResult.class, res);
 			}
@@ -62,7 +64,7 @@ public abstract class AHuobiBtcLtcCoin extends AHuobiOldArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#buyMarket(float)
 	 */
 	@Override
-	public boolean buyMarket(float amount) {
+	public boolean buyMarket(ESymbol fromSymbol,float amount) {
 		boolean result = false;
 		try {
 			String buyMarketRes = service.buyMarket(getCoinType(), String.valueOf(amount), null, null);
@@ -84,7 +86,7 @@ public abstract class AHuobiBtcLtcCoin extends AHuobiOldArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#sellMarket(float)
 	 */
 	@Override
-	public boolean sellMarket(float amount) {
+	public boolean sellMarket(ESymbol toSymbol,float amount) {
 		boolean result = false;
 		try {
 			String sellMarketRes = service.sellMarket(getCoinType(), String.valueOf(amount), null, null);

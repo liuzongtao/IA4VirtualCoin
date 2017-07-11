@@ -52,7 +52,7 @@ public class BTC_ECoinFactory {
 	 * @param symbol
 	 * @return
 	 */
-	public ABTC_ECoin getVirtualCoin(EHuobiSymbol symbol) {
+	public ABTC_ECoin getVirtualCoin(EBTC_ESymbol symbol) {
 		return coinMap.get(symbol);
 	}
 

@@ -37,12 +37,12 @@ public class BitfinexTest {
 //		System.out.println(Json.toJson(client.getSymbolDetails()));
 		
 //		System.out.println(Json.toJson(client.getAccountFees()));
-//		System.out.println(Json.toJson(client.getBalances()));
-//		System.out.println(Json.toJson(client.getSummary()));
-//		System.out.println(Json.toJson(client.getDepositInfo(EBitfinexMethod.BTC.getValue(),EBitfinexWallet.EXCHANGE.getValue())));
+		System.out.println(Json.toJson(client.getBalances()));
+		System.out.println(Json.toJson(client.getSummary()));
+//		System.out.println(Json.toJson(client.getDepositInfo(EBitfinexMethod.ETH.getValue(),EBitfinexWallet.EXCHANGE.getValue())));
 //		String address = "LTNrznxKoMcF31zaX9fRagKHuBquapTPPa";
 //		System.out.println(Json.toJson(client.withdraw(EBitfinexMethod.LTC.getValue(), EBitfinexWallet.EXCHANGE.getValue(), 1000, address)));
-		System.out.println(Json.toJson(client.orderNew(EBitfinexSymbol.BTC_USD.getValue(), 1000, 30, EBitfinexSide.BUY.getValue(), EBitfinexExchangeType.Market.getValue())));
+//		System.out.println(Json.toJson(client.orderNew(EBitfinexSymbol.BTC_USD.getValue(), 1000, 30, EBitfinexSide.BUY.getValue(), EBitfinexExchangeType.Market.getValue())));
 //		System.out.println(Json.toJson(client.ordersMulti(EBitfinexSymbol.BTC_USD.getValue(), 1000, 30, EBitfinexSide.BUY.getValue(), EBitfinexExchangeType.Market.getValue())));
 //		System.out.println(Json.toJson(client.getKeyInfoMap()));
 		
@@ -56,13 +56,6 @@ public class BitfinexTest {
 //			e.printStackTrace();
 //		}
 		
-		try {
-			System.out.println(URLEncoder.encode("=","UTF-8"));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
-
 	}
 
 }

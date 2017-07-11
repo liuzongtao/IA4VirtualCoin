@@ -4,6 +4,7 @@
 package org.finance.mybtc.apiManager.impl;
 
 import org.finance.mybtc.api.huobi.btc_ltc.HuobiAccountInfo;
+import org.finance.mybtc.apiManager.ESymbol;
 
 /**
  * @author zongtao liu
@@ -41,7 +42,7 @@ public class HuobiCny4OldAreaImpl extends AHuobiOldArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#buyMarket(float)
 	 */
 	@Override
-	public boolean buyMarket(float amount) {
+	public boolean buyMarket(ESymbol fromSymbol,float amount) {
 		return false;
 	}
 
@@ -51,7 +52,7 @@ public class HuobiCny4OldAreaImpl extends AHuobiOldArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#sellMarket(float)
 	 */
 	@Override
-	public boolean sellMarket(float amount) {
+	public boolean sellMarket(ESymbol toSymbol,float amount) {
 		return false;
 	}
 
@@ -61,7 +62,7 @@ public class HuobiCny4OldAreaImpl extends AHuobiOldArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#withdrawCoin(float)
 	 */
 	@Override
-	public boolean withdrawCoin(float amount) {
+	public boolean withdrawCoin(float amount,String address) {
 		return false;
 	}
 }

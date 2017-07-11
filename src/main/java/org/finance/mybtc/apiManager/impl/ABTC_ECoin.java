@@ -12,7 +12,9 @@ import org.finance.mybtc.api.btc_e.official.EBTC_ESymbol;
 import org.finance.mybtc.api.btc_e.official.GetInfo;
 import org.finance.mybtc.api.btc_e.official.Trade;
 import org.finance.mybtc.api.btc_e.official.TradeApi;
+import org.finance.mybtc.apiManager.ESymbol;
 import org.finance.mybtc.apiManager.IVirtualCoin;
+import org.finance.mybtc.configs.Configs;
 
 /**
  * @author zongtao liu
@@ -20,7 +22,7 @@ import org.finance.mybtc.apiManager.IVirtualCoin;
  */
 public abstract class ABTC_ECoin implements IVirtualCoin {
 
-	protected TradeApi client = new TradeApi(BTC_E_API_KEY, BTC_E_API_SECRET);
+	protected TradeApi client = new TradeApi(Configs.API_CONFIG_BTC_E.getApiKey(), Configs.API_CONFIG_BTC_E.getApiSecret());
 
 	public abstract EBTC_ESymbol getSmybol();
 
@@ -91,7 +93,7 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#buyMarket(float)
 	 */
 	@Override
-	public boolean buyMarket(float amount) {
+	public boolean buyMarket(ESymbol fromSymbol,float amount) {
 		boolean result = false;
 		float[] priceArr = getBidAndAskPrice();
 		Trade trade = trade("bid", priceArr[0], amount);
@@ -107,7 +109,7 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#sellMarket(float)
 	 */
 	@Override
-	public boolean sellMarket(float amount) {
+	public boolean sellMarket(ESymbol toSymbol,float amount) {
 		boolean result = false;
 		float[] priceArr = getBidAndAskPrice();
 		Trade trade = trade("ask", priceArr[1], amount);
@@ -133,5 +135,16 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 		client.trade.runMethod();
 		return client.trade;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.finance.mybtc.apiManager.IVirtualCoin#exchange(java.lang.String, float)
+	 */
+	@Override
+	public boolean exchange(ESymbol toSymbol, float amount) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
 
 }

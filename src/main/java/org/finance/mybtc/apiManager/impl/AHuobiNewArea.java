@@ -7,7 +7,9 @@ import java.util.List;
 
 import org.finance.mybtc.api.huobi.eth.HuobiEthClient;
 import org.finance.mybtc.api.huobi.eth.response.Account;
+import org.finance.mybtc.apiManager.ESymbol;
 import org.finance.mybtc.apiManager.IVirtualCoin;
+import org.finance.mybtc.configs.Configs;
 
 /**
  * @author zongtao liu
@@ -15,7 +17,7 @@ import org.finance.mybtc.apiManager.IVirtualCoin;
  */
 public abstract class AHuobiNewArea implements IVirtualCoin {
 	
-	protected HuobiEthClient client = new HuobiEthClient(API_KEY, API_SECRET);
+	protected HuobiEthClient client = new HuobiEthClient(Configs.API_CONFIG_HUOBI.getApiKey(),Configs.API_CONFIG_HUOBI.getApiSecret());
 	
 
 	/**
@@ -33,5 +35,17 @@ public abstract class AHuobiNewArea implements IVirtualCoin {
 		}
 		return accountId;
 	}
+
+
+	/* (non-Javadoc)
+	 * @see org.finance.mybtc.apiManager.IVirtualCoin#exchange(java.lang.String, float)
+	 */
+	@Override
+	public boolean exchange(ESymbol toSymbol, float amount) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
 
 }

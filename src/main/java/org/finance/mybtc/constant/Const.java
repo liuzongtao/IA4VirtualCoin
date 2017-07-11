@@ -25,9 +25,11 @@ public class Const {
 	public static final float BTC_E_LTC_WITHDRAW_FEE = 0.001f;
 	public static final float BTC_E_ETH_WITHDRAW_FEE = 0.001f;
 	
+	public static final float BITFINEX_BTC_WITHDRAW_FEE = 0.0004f;
+	public static final float BITFINEX_LTC_WITHDRAW_FEE = 0.001f;
+	public static final float BITFINEX_ETH_WITHDRAW_FEE = 0.01f;
+	
 	public static final float HUOBI_TRADE_FEE_BUY = 0.002f;
 	public static final float HUOBI_TRADE_FEE_SELL = 0.002f;
 	
-	
-
 }
