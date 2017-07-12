@@ -16,7 +16,7 @@ import org.finance.mybtc.api.bitfinex2.calls.auth.Withdraw.WithdrawResponse;
 import org.finance.mybtc.api.bitfinex2.exceptions.BitfinexCallException;
 import org.finance.mybtc.apiManager.ESymbol;
 import org.finance.mybtc.apiManager.IVirtualCoin;
-import org.finance.mybtc.configs.Configs;
+import org.finance.mybtc.core.config.Configs;
 import org.nutz.lang.Strings;
 import org.nutz.log.Log;
 import org.nutz.log.Logs;
@@ -47,10 +47,11 @@ public abstract class ABitfinexCoin implements IVirtualCoin{
 	}
 	
 	public float[] getBidAndAskPrice(EBitfinexSymbols symbol) {
-		float[] result = new float[2];
+		float[] result = null;
 		try {
 			TickerResponse pubticker = bitfinex.pubticker(symbol);
 			if (pubticker != null) {
+				result = new float[2];
 				result[0] = Float.valueOf(pubticker.getBid() + "");
 				result[1] = Float.valueOf(pubticker.getAsk() + "");
 			}

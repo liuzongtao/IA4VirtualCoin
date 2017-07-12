@@ -5,7 +5,6 @@
  */
 package org.finance.mybtc.api.huobi.btc_ltc;
 
-import java.math.BigDecimal;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;

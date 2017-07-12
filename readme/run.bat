@@ -1,1 +1,1 @@
-java -jar mybtc.jar >> run.log
+java -jar mybtc.jar >> logs/run.log

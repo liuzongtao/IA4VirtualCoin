@@ -25,19 +25,25 @@ public class CallUtils {
 	}
 
 	public static <R> R parseResponse(HttpResponse response, Type responseType) throws BitfinexCallException {
+		String content = "";
 		try {
 			InputStream stream = response.getEntity().getContent();
-			String content = IOUtils.toString(stream);
+			content = IOUtils.toString(stream);
 			log.debug("Response is " + content);
 			stream.close();
 			return new Gson().fromJson(content, responseType);
 		} catch (JsonSyntaxException e) {
+			log.error("parseResponse content = " + content);
+			log.error("Could not parse the response as JSon", e);
 			throw new BitfinexCallException("Could not parse the response as JSon", e);
 		} catch (JsonIOException e) {
+			log.error("Could not read the response", e);
 			throw new BitfinexCallException("Could not read the response", e);
 		} catch (IllegalStateException e) {
+			log.error("Could not create the content stream", e);
 			throw new BitfinexCallException("Could not create the content stream", e);
 		} catch (IOException e) {
+			log.error("Could not create the stream", e);
 			throw new BitfinexCallException("Could not create the stream", e);
 		}
 	}

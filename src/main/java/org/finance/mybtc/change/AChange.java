@@ -3,6 +3,7 @@
  */
 package org.finance.mybtc.change;
 
+import org.finance.mybtc.change.bean.ChangeInfo;
 import org.finance.mybtc.constant.Const;
 import org.finance.mybtc.utils.DecimalUtil;
 import org.nutz.log.Log;
@@ -13,7 +14,7 @@ import org.nutz.log.Logs;
  *
  */
 public abstract class AChange implements Ichange {
-	
+
 	protected static Log log = Logs.get();
 
 	public abstract int getFromDigit();
@@ -23,11 +24,17 @@ public abstract class AChange implements Ichange {
 	public abstract float getFromWithdrawFee();
 
 	public abstract float getOtherPfWithdrawFee();
-	
-	protected static long sleepTime =  30*1000l;
+
+	protected static long sleepTime = 30 * 1000l;
 
 	@Override
 	public float preChange(float totalMoney, float fromCoinBuyPrice, float toCoinSellPrice, float otherPfChangePrice) {
+		log.debug("totalMoney = " + totalMoney + "; fromCoinBuyPrice = " + fromCoinBuyPrice + "; toCoinSellPrice = "
+				+ toCoinSellPrice + "; otherPfChangePrice = " + otherPfChangePrice);
+		if(totalMoney == 0){
+			log.error("totalMoney is 0 !!!");
+			return 0;
+		}
 		// 来源币位数
 		int fromDigit = getFromDigit();
 		// 购买获得的数量
@@ -40,7 +47,7 @@ public abstract class AChange implements Ichange {
 		fromCoinNum = fromCoinNum - getFromWithdrawFee();
 		// 终止币位数
 		int toDigit = getToDigit();
-		// 其他平台  的虚拟币数量
+		// 其他平台 的虚拟币数量
 		float toCoinNum = canBuyNum(fromCoinNum, otherPfChangePrice, toDigit);
 		// 火币网收到虚拟币数量
 		toCoinNum = toCoinNum - getOtherPfWithdrawFee();
@@ -48,7 +55,7 @@ public abstract class AChange implements Ichange {
 		float newMoney = toCoinNum * toCoinSellPrice * (1 - Const.HUOBI_TRADE_FEE_SELL);
 		// 计算利润
 		float profit = (newMoney + surplusMoney - totalMoney) / totalMoney;
-		profit = DecimalUtil.decimalDown(profit * 100, 2) ;
+		profit = DecimalUtil.decimalDown(profit * 100, 2);
 		return profit;
 	}
 
@@ -56,13 +63,14 @@ public abstract class AChange implements Ichange {
 		return DecimalUtil.decimalDown(amount / price, digit);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.finance.mybtc.change.Ichange#execExchange()
 	 */
 	@Override
-	public boolean execExchange() {
-		return false;
+	public ChangeInfo execExchange() {
+		return null;
 	}
-	
-	
+
 }

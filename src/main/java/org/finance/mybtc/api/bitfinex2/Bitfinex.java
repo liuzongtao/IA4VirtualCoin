@@ -31,7 +31,7 @@ import org.finance.mybtc.api.bitfinex2.calls.auth.OrderStatus.OrderStatusRespons
 import org.finance.mybtc.api.bitfinex2.calls.auth.Withdraw;
 import org.finance.mybtc.api.bitfinex2.calls.auth.Withdraw.WithdrawResponse;
 import org.finance.mybtc.api.bitfinex2.exceptions.BitfinexCallException;
-import org.finance.mybtc.configs.Configs;
+import org.finance.mybtc.core.config.Configs;
 import org.nutz.json.Json;
 
 public class Bitfinex {

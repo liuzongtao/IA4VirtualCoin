@@ -6,7 +6,7 @@
 package org.finance.mybtc.api.huobi.btc_ltc;
 
 import org.finance.mybtc.apiManager.IVirtualCoin;
-import org.finance.mybtc.configs.Configs;
+import org.finance.mybtc.core.config.Configs;
 
 /**
  * @author yanjg 2014年11月22日

@@ -7,7 +7,7 @@ import org.finance.mybtc.api.huobi.btc_ltc.HuobiAccountInfo;
 import org.finance.mybtc.api.huobi.btc_ltc.HuobiService;
 import org.finance.mybtc.apiManager.ESymbol;
 import org.finance.mybtc.apiManager.IVirtualCoin;
-import org.finance.mybtc.configs.Configs;
+import org.finance.mybtc.core.config.Configs;
 import org.nutz.json.Json;
 import org.nutz.lang.Strings;
 

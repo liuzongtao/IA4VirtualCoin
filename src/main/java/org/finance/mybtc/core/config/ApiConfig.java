@@ -1,19 +1,25 @@
 /**
  * 
  */
-package org.finance.mybtc.configs;
+package org.finance.mybtc.core.config;
 
 import java.io.File;
 
 import org.apache.commons.configuration.AbstractFileConfiguration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.nutz.json.Json;
+import org.nutz.json.JsonFormat;
+import org.nutz.log.Log;
+import org.nutz.log.Logs;
 
 /**
  * @author zongtao liu
  *
  */
 public class ApiConfig {
+
+	private static Log log = Logs.get();
 
 	private String withdraw_addr_btc;
 	private String withdraw_addr_ltc;
@@ -24,6 +30,7 @@ public class ApiConfig {
 
 	public ApiConfig(File file) {
 		if (!file.exists()) {
+			log.error(file.getName() + " is not exists !");
 			return;
 		}
 		try {
@@ -51,6 +58,7 @@ public class ApiConfig {
 			if (config.containsKey("tradePwd")) {
 				tradePwd = config.getString("tradePwd");
 			}
+			log.info(Json.toJson(this, JsonFormat.compact()));
 		} catch (ConfigurationException e) {
 			e.printStackTrace();
 		}

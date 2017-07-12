@@ -44,8 +44,15 @@ public class Huobi2Bitfinex {
 		BitfinexCoinFactory bitfinexFactory = BitfinexCoinFactory.getInstance();
 		ABitfinexCoin bitfinexBtcInfo = bitfinexFactory.getVirtualCoin(EBitfinexCurrencies.BTC);
 		float[] bitfinexBtcBidAndAskPrice = bitfinexBtcInfo.getBidAndAskPrice(EBitfinexSymbols.LTCBTC);
+		if(bitfinexBtcBidAndAskPrice == null){
+			log.error("bitfinexBtcBidAndAskPrice is null");
+			return null;
+		}
 		float bitfinexBtcSellPrice = bitfinexBtcBidAndAskPrice[0];
-		float bitfinexBtcBuyPrice = DecimalUtil.decimalDown(1/bitfinexBtcBidAndAskPrice[1], 5);
+		float bitfinexBtcBuyPrice = 0;
+		if(bitfinexBtcBidAndAskPrice[1] != 0){
+			bitfinexBtcBuyPrice = DecimalUtil.decimalDown(1/bitfinexBtcBidAndAskPrice[1], 5);
+		}
 
 		float maxProfit = 0;
 
