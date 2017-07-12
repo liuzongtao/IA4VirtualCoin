@@ -12,6 +12,7 @@ import java.util.Set;
 import org.apache.commons.configuration.AbstractFileConfiguration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.finance.mybtc.core.config.Configs;
 import org.nutz.lang.Files;
 
 /**
@@ -20,7 +21,7 @@ import org.nutz.lang.Files;
  */
 public class MailFactory {
 
-	private List<Email> myEmailList;
+	private List<Email> myEmailList = new ArrayList<Email>();
 
 	private static volatile MailFactory mailFactory;
 	private static volatile int curIndex = 0;
@@ -29,10 +30,7 @@ public class MailFactory {
 	private static HashSet<String> emailAddrSet = new HashSet<String>();
 
 	private MailFactory() {
-		File file = Files.findFile("app.properties");
-		if(!file.exists()){
-			file = Files.findFile("configs/app.properties");
-		}
+		File file = Configs.getAppConfigFile();
 		if(file.exists()){
 			try {
 				AbstractFileConfiguration config = new PropertiesConfiguration(file);

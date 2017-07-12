@@ -50,5 +50,13 @@ public class Configs {
 			API_CONFIG_BITFINEX = new ApiConfig(Files.findFile(newPath + File.separator + apiBitfinexName));
 		}
 	}
+	
+	public static File getAppConfigFile(){
+		File file = Files.findFile("app.properties");
+		if(!file.exists()){
+			file = Files.findFile("configs/app.properties");
+		}
+		return file;
+	}
 
 }

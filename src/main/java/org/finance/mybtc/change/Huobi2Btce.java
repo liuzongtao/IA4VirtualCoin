@@ -48,7 +48,7 @@ public class Huobi2Btce {
 		ChangeManager changeManager = ChangeManager.getInstance();
 		Map<EBTC_EPairType, Float> priceMap = changeManager.getPriceFromBTC_E();
 
-		float maxProfit = 0;
+		float maxProfit = -10;
 
 		Btc_LtcChangeImpl b2lImpl = new Btc_LtcChangeImpl();
 		float b2lProfit = b2lImpl.preChange(totalMoney, btcBuyPrice, ltcSellPrice,
@@ -100,7 +100,8 @@ public class Huobi2Btce {
 
 		log.info(DateUtil.getCurDateTime() + " ; " + b2lProfit + " ; " + l2bProfit + " ; " + b2eProfit + " ; "
 				+ e2bProfit + " ; " + l2eProfit + " ; " + e2lProfit);
-		if (maxProfit > 2) {
+		changeImpl.setWishProfit(maxProfit);
+		if (maxProfit >= 2) {
 			return changeImpl;
 		}
 		return null;

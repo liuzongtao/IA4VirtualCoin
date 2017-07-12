@@ -19,6 +19,8 @@ import java.util.TreeMap;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.nutz.json.Json;
+import org.nutz.json.JsonFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,10 +92,7 @@ public class ApiSignature {
 		String actualSign = Base64.getEncoder().encodeToString(hash);
 		params.put("Signature", actualSign);
 		if (log.isDebugEnabled()) {
-			log.debug("Dump parameters:");
-			for (Map.Entry<String, String> entry : params.entrySet()) {
-				log.debug("  key: " + entry.getKey() + ", value: " + entry.getValue());
-			}
+			log.debug(Json.toJson(params,JsonFormat.compact()));
 		}
 	}
 

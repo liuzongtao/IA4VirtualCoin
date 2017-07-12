@@ -14,6 +14,8 @@ import org.nutz.log.Logs;
  *
  */
 public abstract class AChange implements Ichange {
+	
+	private float wishProfit;
 
 	protected static Log log = Logs.get();
 
@@ -73,4 +75,17 @@ public abstract class AChange implements Ichange {
 		return null;
 	}
 
+	/**
+	 * @return the wishProfit
+	 */
+	public float getWishProfit() {
+		return wishProfit;
+	}
+
+	/**
+	 * @param wishProfit the wishProfit to set
+	 */
+	public void setWishProfit(float wishProfit) {
+		this.wishProfit = wishProfit;
+	}
 }

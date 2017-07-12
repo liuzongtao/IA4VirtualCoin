@@ -54,7 +54,7 @@ public class Huobi2Bitfinex {
 			bitfinexBtcBuyPrice = DecimalUtil.decimalDown(1/bitfinexBtcBidAndAskPrice[1], 5);
 		}
 
-		float maxProfit = 0;
+		float maxProfit = -10;
 
 		Btc_LtcChangeImpl b2lImpl = new Btc_LtcChangeImpl();
 		float b2lProfit = b2lImpl.preChange(totalMoney, btcBuyPrice, ltcSellPrice, bitfinexBtcSellPrice);
@@ -71,7 +71,8 @@ public class Huobi2Bitfinex {
 		}
 
 		log.info(DateUtil.getCurDateTime() + " ; " + b2lProfit + " ; " + l2bProfit);
-		if (maxProfit > 2) {
+		changeImpl.setWishProfit(maxProfit);
+		if (maxProfit >= 2) {
 			return changeImpl;
 		}
 		return null;
