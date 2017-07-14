@@ -19,7 +19,7 @@ import com.google.gson.JsonSyntaxException;
 public class CallUtils {
 
 	private static Log log = Logs.get();
-	
+
 	public static URIBuilder createUriBuilder(String path) {
 		return new URIBuilder().setScheme(Config.scheme).setHost(Config.host).setPath(Config.basePath + path);
 	}
@@ -33,7 +33,7 @@ public class CallUtils {
 			stream.close();
 			return new Gson().fromJson(content, responseType);
 		} catch (JsonSyntaxException e) {
-			log.error("parseResponse content = " + content);
+			log.debug("parseResponse content = " + content);
 			log.error("Could not parse the response as JSon", e);
 			throw new BitfinexCallException("Could not parse the response as JSon", e);
 		} catch (JsonIOException e) {

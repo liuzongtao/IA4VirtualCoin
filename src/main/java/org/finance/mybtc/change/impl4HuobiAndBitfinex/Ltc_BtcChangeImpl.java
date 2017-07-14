@@ -63,6 +63,8 @@ public class Ltc_BtcChangeImpl extends AChange {
 			info.addErrorInfo("huobiBuyLtc is " + huobiBuyLtc);
 			return info;
 		}
+		log.debug("huobiBuyLtc is " + huobiBuyLtc);
+
 		float huobiLtcNum2 = huobiLtc.getCoinNum();
 		info.addInfo("huobiLtcNum2", huobiLtcNum2);
 		// 进行提币
@@ -79,7 +81,7 @@ public class Ltc_BtcChangeImpl extends AChange {
 		IVirtualCoin bitfinexLtc = bitfinexFactory.getVirtualCoin(EBitfinexCurrencies.LTC);
 		float bitfinexLtcNum = bitfinexLtc.getCoinNum();
 		info.addInfo("bitfinexLtcNum", bitfinexLtcNum);
-		//查询bitfinex是否收到莱特币
+		// 查询bitfinex是否收到莱特币
 		float addBitfinexLtcNum = 0;
 		float bitfinexLtcNum2 = 0;
 		while (addBitfinexLtcNum <= 0) {
@@ -127,7 +129,7 @@ public class Ltc_BtcChangeImpl extends AChange {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			huobiBtcNum2 = bitfinexLtc.getCoinNum();
+			huobiBtcNum2 = huobiBtc.getCoinNum();
 			log.debug("huobiBtcNum2 == " + huobiBtcNum2);
 			addhuobiBtcNum = huobiBtcNum2 - huobiBtcNum;
 			if (addhuobiBtcNum > 0) {

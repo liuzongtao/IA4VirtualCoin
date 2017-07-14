@@ -26,6 +26,7 @@ final public class TradeApi {
     public Trades trades;
     public GetInfo getInfo;
     public TransHistory transHistory;
+    public WithDrawCoin withDrawCoin;
     public TradeHistory tradeHistory;
     public ActiveOrders activeOrders;
     public OrderInfo orderInfo;
@@ -73,6 +74,7 @@ final public class TradeApi {
         trades = new Trades();
         getInfo = new GetInfo(privateNetwork);
         transHistory = new TransHistory(privateNetwork);
+        withDrawCoin = new WithDrawCoin(privateNetwork);
         tradeHistory = new TradeHistory(privateNetwork);
         activeOrders = new ActiveOrders(privateNetwork);
         orderInfo = new OrderInfo(privateNetwork);
@@ -126,6 +128,7 @@ final public class TradeApi {
         getInfo.setTimeouts(connectMillis, readMillis);
         transHistory.setTimeouts(connectMillis, readMillis);
         tradeHistory.setTimeouts(connectMillis, readMillis);
+        withDrawCoin.setTimeouts(connectMillis, readMillis);
         activeOrders.setTimeouts(connectMillis, readMillis);
         orderInfo.setTimeouts(connectMillis, readMillis);
         trade.setTimeouts(connectMillis, readMillis);
@@ -143,6 +146,7 @@ final public class TradeApi {
         getInfo.resetTimeouts();
         transHistory.resetTimeouts();
         tradeHistory.resetTimeouts();
+        withDrawCoin.resetTimeouts();
         activeOrders.resetTimeouts();
         orderInfo.resetTimeouts();
         trade.resetTimeouts();

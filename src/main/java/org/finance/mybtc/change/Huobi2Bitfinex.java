@@ -3,6 +3,9 @@
  */
 package org.finance.mybtc.change;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.finance.mybtc.api.bitfinex2.EBitfinexCurrencies;
 import org.finance.mybtc.api.bitfinex2.EBitfinexSymbols;
 import org.finance.mybtc.api.huobi.beans.EHuobiSymbol;
@@ -12,19 +15,17 @@ import org.finance.mybtc.apiManager.IVirtualCoin;
 import org.finance.mybtc.apiManager.impl.ABitfinexCoin;
 import org.finance.mybtc.change.impl4HuobiAndBitfinex.Btc_LtcChangeImpl;
 import org.finance.mybtc.change.impl4HuobiAndBitfinex.Ltc_BtcChangeImpl;
-import org.finance.mybtc.utils.DateUtil;
 import org.finance.mybtc.utils.DecimalUtil;
-import org.nutz.log.Log;
-import org.nutz.log.Logs;
+import org.nutz.json.Json;
+import org.nutz.json.JsonFormat;
 
 /**
  * @author zongtao liu
  *
  */
-public class Huobi2Bitfinex {
+public class Huobi2Bitfinex extends APfExchange {
 
-	private static Log log = Logs.get();
-
+	@Override
 	public AChange preChange(float totalMoney) {
 		AChange changeImpl = null;
 		HuobiCoinFactory huobiFactory = HuobiCoinFactory.getInstance();
@@ -44,20 +45,22 @@ public class Huobi2Bitfinex {
 		BitfinexCoinFactory bitfinexFactory = BitfinexCoinFactory.getInstance();
 		ABitfinexCoin bitfinexBtcInfo = bitfinexFactory.getVirtualCoin(EBitfinexCurrencies.BTC);
 		float[] bitfinexBtcBidAndAskPrice = bitfinexBtcInfo.getBidAndAskPrice(EBitfinexSymbols.LTCBTC);
-		if(bitfinexBtcBidAndAskPrice == null){
+		if (bitfinexBtcBidAndAskPrice == null) {
 			log.error("bitfinexBtcBidAndAskPrice is null");
 			return null;
 		}
 		float bitfinexBtcSellPrice = bitfinexBtcBidAndAskPrice[0];
 		float bitfinexBtcBuyPrice = 0;
-		if(bitfinexBtcBidAndAskPrice[1] != 0){
-			bitfinexBtcBuyPrice = DecimalUtil.decimalDown(1/bitfinexBtcBidAndAskPrice[1], 5);
+		if (bitfinexBtcBidAndAskPrice[1] != 0) {
+			bitfinexBtcBuyPrice = DecimalUtil.decimalDown(1 / bitfinexBtcBidAndAskPrice[1], 5);
 		}
 
+		Map<String, Object> profitInfo = new HashMap<String, Object>();
 		float maxProfit = -10;
 
 		Btc_LtcChangeImpl b2lImpl = new Btc_LtcChangeImpl();
 		float b2lProfit = b2lImpl.preChange(totalMoney, btcBuyPrice, ltcSellPrice, bitfinexBtcSellPrice);
+		profitInfo.put("b2lProfit", b2lProfit);
 		if (b2lProfit > maxProfit) {
 			changeImpl = b2lImpl;
 			maxProfit = b2lProfit;
@@ -65,14 +68,15 @@ public class Huobi2Bitfinex {
 
 		Ltc_BtcChangeImpl l2bimpl = new Ltc_BtcChangeImpl();
 		float l2bProfit = l2bimpl.preChange(totalMoney, ltcBuyPrice, btcSellPrice, bitfinexBtcBuyPrice);
+		profitInfo.put("l2bProfit", l2bProfit);
 		if (l2bProfit > maxProfit) {
 			changeImpl = l2bimpl;
 			maxProfit = l2bProfit;
 		}
 
-		log.info(DateUtil.getCurDateTime() + " ; " + b2lProfit + " ; " + l2bProfit);
-		changeImpl.setWishProfit(maxProfit);
+		log.info(profitInfo.get("b2lProfit") + " , " + profitInfo.get("l2bProfit"));
 		if (maxProfit >= 2) {
+			changeImpl.setWishProfit(maxProfit);
 			return changeImpl;
 		}
 		return null;

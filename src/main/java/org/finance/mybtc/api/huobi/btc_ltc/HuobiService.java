@@ -357,9 +357,9 @@ public class HuobiService extends Base {
 	 */
 	private float getWithdrawAmount(EHuobiCoinType coinType, float withdrawAmount) {
 		if (coinType == EHuobiCoinType.BTC) {
-			withdrawAmount = DecimalUtil.decimalDown(withdrawAmount, 2);
+			withdrawAmount = DecimalUtil.decimalDown(withdrawAmount, 4);
 		} else if (coinType == EHuobiCoinType.LTC) {
-			withdrawAmount = DecimalUtil.decimalDown(withdrawAmount, 1);
+			withdrawAmount = DecimalUtil.decimalDown(withdrawAmount, 4);
 		}
 		return withdrawAmount;
 	}
@@ -426,7 +426,20 @@ public class HuobiService extends Base {
 			return null;
 		}
 		ActualTickerBean result = null;
-		Response response = Http.get(url);
+		
+		Response response = null;
+		for(int i = 0 ; i < 10 ;i ++){
+			try {
+				response = Http.get(url);
+				break;
+			} catch (Exception e) {
+				log.error(e.getMessage());
+			}
+		}
+		if (response == null){
+			return null;
+		}
+		
 		String content = response.getContent();
 		if(Strings.isNotBlank(content)){
 			try {

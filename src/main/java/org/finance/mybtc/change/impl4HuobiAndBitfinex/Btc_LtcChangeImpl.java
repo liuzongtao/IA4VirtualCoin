@@ -59,7 +59,7 @@ public class Btc_LtcChangeImpl extends AChange {
 	public float getOtherPfWithdrawFee() {
 		return Const.BITFINEX_LTC_WITHDRAW_FEE;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -92,14 +92,14 @@ public class Btc_LtcChangeImpl extends AChange {
 			info.addErrorInfo("huobiWithdrawBtcRes is " + huobiWithdrawBtcRes);
 			return info;
 		}
-		info.addInfo("huobiWithdrawBtcRes", huobiWithdrawBtcRes);
+		log.debug("huobiWithdrawBtcRes is " + huobiWithdrawBtcRes);
 
 		BitfinexCoinFactory bitfinexFactory = BitfinexCoinFactory.getInstance();
 		// 获取当前bitfinex比特币的数量
 		IVirtualCoin bitfinexBtc = bitfinexFactory.getVirtualCoin(EBitfinexCurrencies.BTC);
 		float bitfinexBtcNum = bitfinexBtc.getCoinNum();
 		info.addInfo("bitfinexBtcNum", bitfinexBtcNum);
-		//查询bitfinex是否收到比特币
+		// 查询bitfinex是否收到比特币
 		float addBitfinexBtcNum = 0;
 		float bitfinexBtcNum2 = 0;
 		while (addBitfinexBtcNum <= 0) {
@@ -115,7 +115,7 @@ public class Btc_LtcChangeImpl extends AChange {
 				info.addInfo("addBitfinexBtcNum", addBitfinexBtcNum);
 			}
 		}
-		
+
 		// 通过比特币转换到莱特币
 		boolean bitfinexBtc2LtcRes = bitfinexBtc.exchange(ESymbol.BTC, bitfinexBtcNum2);
 		if (!bitfinexBtc2LtcRes) {
@@ -169,6 +169,5 @@ public class Btc_LtcChangeImpl extends AChange {
 		info.addInfo("huobiBtc -> bitfinexBtc -> bitfinexLtc -> huobiLtc : profit is " + (huobiCnyNum2 - huobiCnyNum));
 		return info;
 	}
-	
 
 }

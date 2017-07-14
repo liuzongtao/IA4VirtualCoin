@@ -22,11 +22,14 @@ import org.finance.mybtc.core.config.Configs;
  */
 public abstract class ABTC_ECoin implements IVirtualCoin {
 
-	protected TradeApi client = new TradeApi(Configs.API_CONFIG_BTC_E.getApiKey(), Configs.API_CONFIG_BTC_E.getApiSecret());
+	protected TradeApi client = new TradeApi(Configs.API_CONFIG_BTC_E.getApiKey(),
+			Configs.API_CONFIG_BTC_E.getApiSecret());
 
 	public abstract EBTC_ESymbol getSmybol();
 
 	public abstract EBTC_EPairType getPair();
+
+	public abstract String getWithdrawType();
 
 	/*
 	 * (non-Javadoc)
@@ -93,7 +96,7 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#buyMarket(float)
 	 */
 	@Override
-	public boolean buyMarket(ESymbol fromSymbol,float amount) {
+	public boolean buyMarket(ESymbol fromSymbol, float amount) {
 		boolean result = false;
 		float[] priceArr = getBidAndAskPrice();
 		Trade trade = trade("bid", priceArr[0], amount);
@@ -109,7 +112,7 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#sellMarket(float)
 	 */
 	@Override
-	public boolean sellMarket(ESymbol toSymbol,float amount) {
+	public boolean sellMarket(ESymbol toSymbol, float amount) {
 		boolean result = false;
 		float[] priceArr = getBidAndAskPrice();
 		Trade trade = trade("ask", priceArr[1], amount);
@@ -136,15 +139,29 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 		return client.trade;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.finance.mybtc.apiManager.IVirtualCoin#exchange(java.lang.String, float)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.finance.mybtc.apiManager.IVirtualCoin#exchange(java.lang.String,
+	 * float)
 	 */
 	@Override
 	public boolean exchange(ESymbol toSymbol, float amount) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.finance.mybtc.apiManager.IVirtualCoin#withdrawCoin(float)
+	 */
+	@Override
+	public boolean withdrawCoin(float amount, String address) {
+		client.withDrawCoin.setCoinName(getWithdrawType());
+		client.withDrawCoin.setAmount(String.valueOf(amount));
+		client.withDrawCoin.setaddress(address);
+		return client.withDrawCoin.runMethod();
+	}
 
 }

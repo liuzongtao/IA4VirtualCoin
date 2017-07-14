@@ -9,6 +9,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.util.EntityUtils;
 import org.finance.mybtc.utils.EncryptUtil;
+import org.nutz.json.Json;
+import org.nutz.json.JsonFormat;
 import org.nutz.log.Log;
 import org.nutz.log.Logs;
 
@@ -17,7 +19,7 @@ import org.nutz.log.Logs;
  */
 public abstract class Base {
 
-	private static Log log = Logs.get();
+	protected static Log log = Logs.get();
 	// 火币现货配置信息
 	public static String HUOBI_API_URL = "https://api.huobi.com/apiv3";
 
@@ -28,18 +30,43 @@ public abstract class Base {
 	protected static int success = 200;
 
 	public String post(Map<String, Object> map, String url) throws Exception {
-		return HttpUtil.post(url, map, new ResponseHandler<String>() {
+		log.debug("request map is " + Json.toJson(map, JsonFormat.compact()));
+		ResponseHandler<String> handler = new ResponseHandler<String>() {
 			@Override
 			public String handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
 				int code = response.getStatusLine().getStatusCode();
 				if (success == code) {
-					return EntityUtils.toString(response.getEntity(), "utf-8");
+					String result = EntityUtils.toString(response.getEntity(), "utf-8");
+					log.debug("response is " + result);
+					return result;
 				}
 				log.infof("response code {}", code);
 				return null;
 			}
-
-		});
+		};
+		int times = 10;
+		String post = null;
+		boolean isOk = false;
+		Exception e = null;
+		for (int i = 0; i < times; i++) {
+			try {
+				post = HttpUtil.post(url, map, handler);
+				isOk = true;
+				break;
+			} catch (Exception tmpException) {
+				log.error(e.getMessage());
+				try {
+					Thread.sleep(100);
+				} catch (Exception e2) {
+					log.error(e2.getMessage());
+				}
+				e = tmpException;
+			}
+		}
+		if (!isOk) {
+			throw e;
+		}
+		return post;
 	}
 
 	public long getTimestamp() {

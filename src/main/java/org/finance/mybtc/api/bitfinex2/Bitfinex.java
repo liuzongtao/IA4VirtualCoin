@@ -1,6 +1,5 @@
 package org.finance.mybtc.api.bitfinex2;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
@@ -33,8 +32,12 @@ import org.finance.mybtc.api.bitfinex2.calls.auth.Withdraw.WithdrawResponse;
 import org.finance.mybtc.api.bitfinex2.exceptions.BitfinexCallException;
 import org.finance.mybtc.core.config.Configs;
 import org.nutz.json.Json;
+import org.nutz.log.Log;
+import org.nutz.log.Logs;
 
 public class Bitfinex {
+	
+	private static Log log = Logs.get();
 
 	public final HttpClient client;
 
@@ -212,11 +215,29 @@ public class Bitfinex {
 	}
 
 	private Object call(BitfinexCall call) throws BitfinexCallException {
-		try {
-			return call.parseResponse(client.execute((HttpUriRequest) call));
-		} catch (IOException e) {
+		int times = 10;
+		Object parseResponse = null;
+		Exception e = null;
+		boolean isSuccess = false;
+		for(int i = 0 ; i< times ; i++){
+			try {
+				parseResponse = call.parseResponse(client.execute((HttpUriRequest) call));
+				isSuccess = true;
+				break;
+			} catch (Exception tmpException) {
+				log.error(tmpException.getMessage());
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e1) {
+					log.error(e1.getMessage());
+				}
+				e = tmpException;
+			} 
+		}
+		if(!isSuccess){
 			throw new BitfinexCallException("Could not send call using: " + call, e);
 		}
+		return parseResponse;
 	}
 	
 	public static void main(String[] args) {

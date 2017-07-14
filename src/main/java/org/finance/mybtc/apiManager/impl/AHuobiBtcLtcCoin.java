@@ -48,7 +48,8 @@ public abstract class AHuobiBtcLtcCoin extends AHuobiOldArea {
 	protected WithdrawCoinResult withdrawCoin(float amount, String withdrawAddr, float withdrawFee) {
 		WithdrawCoinResult result = null;
 		try {
-			String res = service.withdrawCoin(getCoinType(), withdrawAddr, amount, Configs.API_CONFIG_HUOBI.getTradePwd(), null, withdrawFee);
+			String res = service.withdrawCoin(getCoinType(), withdrawAddr, amount,
+					Configs.API_CONFIG_HUOBI.getTradePwd(), null, withdrawFee);
 			if (Strings.isNotBlank(res)) {
 				result = Json.fromJson(WithdrawCoinResult.class, res);
 			}
@@ -64,7 +65,7 @@ public abstract class AHuobiBtcLtcCoin extends AHuobiOldArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#buyMarket(float)
 	 */
 	@Override
-	public boolean buyMarket(ESymbol fromSymbol,float amount) {
+	public boolean buyMarket(ESymbol fromSymbol, float amount) {
 		boolean result = false;
 		try {
 			String buyMarketRes = service.buyMarket(getCoinType(), String.valueOf(amount), null, null);
@@ -86,13 +87,13 @@ public abstract class AHuobiBtcLtcCoin extends AHuobiOldArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#sellMarket(float)
 	 */
 	@Override
-	public boolean sellMarket(ESymbol toSymbol,float amount) {
+	public boolean sellMarket(ESymbol toSymbol, float amount) {
 		boolean result = false;
 		try {
 			String sellMarketRes = service.sellMarket(getCoinType(), String.valueOf(amount), null, null);
 			if (Strings.isNotBlank(sellMarketRes)) {
 				SellOrBuyResult res = Json.fromJson(SellOrBuyResult.class, sellMarketRes);
-				if (res != null && res.getResult() == SellOrBuyResult.RESULT_SUCCESS) {
+				if (res != null && Strings.equals(res.getResult(), SellOrBuyResult.RESULT_SUCCESS)) {
 					result = true;
 				}
 			}

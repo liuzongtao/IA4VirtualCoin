@@ -40,7 +40,7 @@ public class HuobiLtcImpl extends AHuobiBtcLtcCoin {
 	 */
 	@Override
 	public boolean withdrawCoin(float amount, String address) {
-		WithdrawCoinResult result = withdrawCoin(amount, address, Const.HUOBI_LTC_WITHDRAW_FEE);
+		WithdrawCoinResult result = withdrawCoin(amount - Const.HUOBI_LTC_WITHDRAW_FEE, address, Const.HUOBI_LTC_WITHDRAW_FEE);
 		if (result != null && result.getCode() == 200) {
 			return true;
 		}

@@ -32,7 +32,7 @@ public class NewOrder extends HttpBitfinex {
 
 		private static final long serialVersionUID = -2816062237655659945L;
 
-		private int order_id;
+		private long order_id;
 		private String symbol;
 		private String exchange;
 		private double price;
@@ -59,7 +59,7 @@ public class NewOrder extends HttpBitfinex {
 					+ message + "]";
 		}
 
-		public int getOrder_id() {
+		public long getOrder_id() {
 			return order_id;
 		}
 

@@ -55,8 +55,8 @@ public abstract class ABitfinexCoin implements IVirtualCoin{
 				result[0] = Float.valueOf(pubticker.getBid() + "");
 				result[1] = Float.valueOf(pubticker.getAsk() + "");
 			}
-		} catch (BitfinexCallException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			log.error(e.getMessage());
 		}
 		return result;
 	}
