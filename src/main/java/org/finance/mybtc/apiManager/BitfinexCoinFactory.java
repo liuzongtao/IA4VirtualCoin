@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.finance.mybtc.api.bitfinex2.EBitfinexCurrencies;
-import org.finance.mybtc.apiManager.impl.ABitfinexCoin;
-import org.finance.mybtc.apiManager.impl.BitfinexBtcImpl;
-import org.finance.mybtc.apiManager.impl.BitfinexEthImpl;
-import org.finance.mybtc.apiManager.impl.BitfinexLtcImpl;
+import org.finance.mybtc.apiManager.impl.bitfinex.ABitfinexCoin;
+import org.finance.mybtc.apiManager.impl.bitfinex.BitfinexBtcImpl;
+import org.finance.mybtc.apiManager.impl.bitfinex.BitfinexEthImpl;
+import org.finance.mybtc.apiManager.impl.bitfinex.BitfinexLtcImpl;
 
 /**
  * @author zongtao liu

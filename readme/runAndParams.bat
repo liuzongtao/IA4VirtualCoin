@@ -1,0 +1,1 @@
+java -jar mybtc.jar huobi2btce 0 false >> logs/run.log

@@ -14,7 +14,7 @@ public interface IVirtualCoin {
 	 * 
 	 * @return
 	 */
-	public float[] getBidAndAskPrice();
+	public float[] getBidAndAskPrice(String pair);
 
 	/**
 	 * 获取当前拥有的数量
@@ -55,4 +55,9 @@ public interface IVirtualCoin {
 	 * @return
 	 */
 	public boolean exchange(ESymbol toSymbol,float amount);
+	
+	/**
+	 * @return
+	 */
+	public ESymbol getESymbol();
 }

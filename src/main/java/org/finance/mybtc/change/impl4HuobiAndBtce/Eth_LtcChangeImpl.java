@@ -3,14 +3,14 @@
  */
 package org.finance.mybtc.change.impl4HuobiAndBtce;
 
-import org.finance.mybtc.change.AChange;
+import org.finance.mybtc.change.AHuobiChange;
 import org.finance.mybtc.constant.Const;
 
 /**
  * @author zongtao liu
  *
  */
-public class Eth_LtcChangeImpl extends AChange {
+public class Eth_LtcChangeImpl extends AHuobiChange {
 
 	@Override
 	public int getFromDigit() {

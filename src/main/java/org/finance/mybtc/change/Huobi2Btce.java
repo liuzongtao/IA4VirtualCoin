@@ -10,12 +10,13 @@ import org.finance.mybtc.api.btc_e.official.EBTC_EPairType;
 import org.finance.mybtc.api.huobi.beans.EHuobiSymbol;
 import org.finance.mybtc.apiManager.HuobiCoinFactory;
 import org.finance.mybtc.apiManager.IVirtualCoin;
+import org.finance.mybtc.change.bean.ChangeInfo;
 import org.finance.mybtc.change.impl4HuobiAndBtce.Btc_EthChangeImpl;
 import org.finance.mybtc.change.impl4HuobiAndBtce.Btc_LtcChangeImpl;
 import org.finance.mybtc.change.impl4HuobiAndBtce.Eth_BtcChangeImpl;
-import org.finance.mybtc.change.impl4HuobiAndBtce.Eth_LtcChangeImpl;
 import org.finance.mybtc.change.impl4HuobiAndBtce.Ltc_BtcChangeImpl;
-import org.finance.mybtc.change.impl4HuobiAndBtce.Ltc_EthChangeImpl;
+import org.nutz.json.Json;
+import org.nutz.json.JsonFormat;
 
 /**
  * @author zongtao liu
@@ -24,7 +25,7 @@ import org.finance.mybtc.change.impl4HuobiAndBtce.Ltc_EthChangeImpl;
 public class Huobi2Btce extends APfExchange {
 
 	@Override
-	public AChange preChange(float totalMoney) {
+	public AChange preChange(float totalMoney,float wishProfit) {
 		AChange changeImpl = null;
 		HuobiCoinFactory huobiFactory = HuobiCoinFactory.getInstance();
 		IVirtualCoin cnyInfo = huobiFactory.getVirtualCoin(EHuobiSymbol.CNY_OLD);
@@ -33,14 +34,17 @@ public class Huobi2Btce extends APfExchange {
 		}
 
 		IVirtualCoin btcInfo = huobiFactory.getVirtualCoin(EHuobiSymbol.BTC);
-		float btcSellPrice = btcInfo.getBidAndAskPrice()[0];
-		float btcBuyPrice = btcInfo.getBidAndAskPrice()[1];
+		float[] huobiBtcBidAndAskPrice = btcInfo.getBidAndAskPrice(EHuobiSymbol.BTC.toString());
+		float btcSellPrice = huobiBtcBidAndAskPrice[0];
+		float btcBuyPrice = huobiBtcBidAndAskPrice[1];
 		IVirtualCoin ltcInfo = huobiFactory.getVirtualCoin(EHuobiSymbol.LTC);
-		float ltcSellPrice = ltcInfo.getBidAndAskPrice()[0];
-		float ltcBuyPrice = ltcInfo.getBidAndAskPrice()[1];
+		float[] huobiLtcbidAndAskPrice = ltcInfo.getBidAndAskPrice(EHuobiSymbol.LTC.toString());
+		float ltcSellPrice = huobiLtcbidAndAskPrice[0];
+		float ltcBuyPrice = huobiLtcbidAndAskPrice[1];
 		IVirtualCoin ethInfo = huobiFactory.getVirtualCoin(EHuobiSymbol.ETH);
-		float ethSellPrice = ethInfo.getBidAndAskPrice()[0];
-		float ethBuyPrice = ethInfo.getBidAndAskPrice()[1];
+		float[] huobiEthBidAndAskPrice = ethInfo.getBidAndAskPrice(EHuobiSymbol.ETH.toString());
+		float ethSellPrice = huobiEthBidAndAskPrice[0];
+		float ethBuyPrice = huobiEthBidAndAskPrice[1];
 
 		ChangeManager changeManager = ChangeManager.getInstance();
 		Map<EBTC_EPairType, Float> priceMap = changeManager.getPriceFromBTC_E();
@@ -66,48 +70,67 @@ public class Huobi2Btce extends APfExchange {
 			maxProfit = l2bProfit;
 		}
 
-		Btc_EthChangeImpl b2eImpl = new Btc_EthChangeImpl();
-		float b2eProfit = b2eImpl.preChange(totalMoney, btcBuyPrice, ethSellPrice,
-				priceMap.get(EBTC_EPairType.BTC_ETH));
-		profitInfo.put("b2eProfit", b2eProfit);
-		if (b2eProfit > maxProfit) {
-			changeImpl = b2eImpl;
-			maxProfit = b2eProfit;
-		}
+//		Btc_EthChangeImpl b2eImpl = new Btc_EthChangeImpl();
+//		float b2eProfit = b2eImpl.preChange(totalMoney, btcBuyPrice, ethSellPrice,
+//				priceMap.get(EBTC_EPairType.BTC_ETH));
+//		profitInfo.put("b2eProfit", b2eProfit);
+//		if (b2eProfit > maxProfit) {
+//			changeImpl = b2eImpl;
+//			maxProfit = b2eProfit;
+//		}
+//
+//		Eth_BtcChangeImpl e2bimpl = new Eth_BtcChangeImpl();
+//		float e2bProfit = e2bimpl.preChange(totalMoney, ethBuyPrice, btcSellPrice,
+//				priceMap.get(EBTC_EPairType.ETH_BTC));
+//		profitInfo.put("e2bProfit", e2bProfit);
+//		if (e2bProfit > maxProfit) {
+//			changeImpl = e2bimpl;
+//			maxProfit = e2bProfit;
+//		}
 
-		Eth_BtcChangeImpl e2bimpl = new Eth_BtcChangeImpl();
-		float e2bProfit = e2bimpl.preChange(totalMoney, ethBuyPrice, btcSellPrice,
-				priceMap.get(EBTC_EPairType.ETH_BTC));
-		profitInfo.put("e2bProfit", e2bProfit);
-		if (e2bProfit > maxProfit) {
-			changeImpl = e2bimpl;
-			maxProfit = e2bProfit;
-		}
-
-		Ltc_EthChangeImpl l2eImpl = new Ltc_EthChangeImpl();
-		float l2eProfit = l2eImpl.preChange(totalMoney, ltcBuyPrice, ethSellPrice,
-				priceMap.get(EBTC_EPairType.LTC_ETH));
-		profitInfo.put("l2eProfit", l2eProfit);
-		if (l2eProfit > maxProfit) {
-			changeImpl = l2eImpl;
-			maxProfit = l2eProfit;
-		}
-
-		Eth_LtcChangeImpl e2limpl = new Eth_LtcChangeImpl();
-		float e2lProfit = e2limpl.preChange(totalMoney, ethBuyPrice, ltcSellPrice,
-				priceMap.get(EBTC_EPairType.ETH_LTC));
-		profitInfo.put("e2lProfit", e2lProfit);
-		if (e2lProfit > maxProfit) {
-			changeImpl = e2limpl;
-			maxProfit = e2lProfit;
-		}
-
-		log.info(profitInfo.get("b2lProfit") + " , " + profitInfo.get("l2bProfit"));
-		if (maxProfit >= 2) {
+		log.debug(Json.toJson(profitInfo, JsonFormat.compact()));
+		log.info(profitInfo.get("b2lProfit") + " , " + profitInfo.get("l2bProfit") + " , " + profitInfo.get("b2eProfit")
+				+ " , " + profitInfo.get("e2bProfit"));
+		if (maxProfit >= wishProfit) {
 			changeImpl.setWishProfit(maxProfit);
 			return changeImpl;
 		}
 		return null;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.finance.mybtc.change.APfExchange#execExchangeByType(java.lang.String)
+	 */
+	@Override
+	public void execExchangeByType(String type) {
+		ChangeInfo execExchange = null;
+		switch (type) {
+		case "b2l":
+			Btc_LtcChangeImpl b2lImpl = new Btc_LtcChangeImpl();
+			execExchange = b2lImpl.execExchange();
+			break;
+		case "l2b":
+			Ltc_BtcChangeImpl l2bImpl = new Ltc_BtcChangeImpl();
+			execExchange = l2bImpl.execExchange();
+			break;
+		case "b2e":
+			Btc_EthChangeImpl b2eImpl = new Btc_EthChangeImpl();
+			execExchange = b2eImpl.execExchange();
+			break;
+		case "e2b":
+			Eth_BtcChangeImpl e2bImpl = new Eth_BtcChangeImpl();
+			execExchange = e2bImpl.execExchange();
+			break;
+		default:
+			break;
+		}
+		if(execExchange == null){
+			System.out.println("execExchange is null !");
+		}else{
+			System.out.println(Json.toJson(execExchange));
+		}
+	}
+	
+	
 
 }

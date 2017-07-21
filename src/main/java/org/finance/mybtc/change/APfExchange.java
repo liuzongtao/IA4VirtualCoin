@@ -20,17 +20,19 @@ public abstract class APfExchange {
 
 	private static long lastSendEmail = 0;
 
-	public abstract AChange preChange(float totalMoney);
+	public abstract AChange preChange(float totalMoney, float wishProfit);
+	
+	public abstract void execExchangeByType(String type);
 
-	public boolean execExchange(float testMoney, boolean isTest) {
+	public boolean execExchange(float testMoney, boolean isTest, float wishProfit) {
 		boolean result = false;
-		AChange preChange = preChange(testMoney);
+		AChange preChange = preChange(testMoney, wishProfit);
 		// 测试使用
-		if (preChange != null && isTest) {
+		if (preChange != null) {
 			long now = System.currentTimeMillis();
 			if (now - lastSendEmail > 10 * 60 * 1000l) {
 				MailFactory.getInstance().sendEmail(preChange.getClass().getSimpleName(),
-						"preChange getWishProfit is " + preChange.getWishProfit());
+						this.getClass().getSimpleName() + " preChange getWishProfit is " + preChange.getWishProfit());
 				lastSendEmail = now;
 			}
 		}

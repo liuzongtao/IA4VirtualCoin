@@ -17,25 +17,33 @@ abstract class PrivateSingleResponse extends PrivateBaseClass {
             it = null;
             localTimestamp = 0;
             success = false;
-            rootNode = mapper.readTree(json);
-            if (rootNode.path("success").toString().equals("1")) {
-                it = rootNode.path("return").path("funds").fieldNames();
-                if (it != null) {
-                    while (it.hasNext()) {
-                        currencyNames.add(convertPairName(it.next()));
+            String jsonStr = convertStreamToString(json);
+            if(jsonStr.startsWith("{") || jsonStr.startsWith("[")){
+            	log.debug("json is  " + jsonStr);
+            	rootNode = mapper.readTree(jsonStr);
+                if (rootNode.path("success").toString().equals("1")) {
+                    it = rootNode.path("return").path("funds").fieldNames();
+                    if (it != null) {
+                        while (it.hasNext()) {
+                            currencyNames.add(convertPairName(it.next()));
+                        }
+                        localTimestamp = System.currentTimeMillis();
+                        success = true;
+                        return;
                     }
-                    localTimestamp = System.currentTimeMillis();
-                    success = true;
+                } else if (getErrorMessage().length() != 0) {
+                	log.error(getErrorMessage());
                     return;
                 }
-            } else if (getErrorMessage().length() != 0) {
-                return;
+            }else{
+            	log.error( "setData is not json ; jsonStr == " + jsonStr); 
             }
         } catch (Exception e) {
+        	e.printStackTrace();
         }
         makeDefaultRootNode();
     }
-
+    
     public synchronized ArrayList<String> getCurrencyList() {
         return currencyNames;
     }

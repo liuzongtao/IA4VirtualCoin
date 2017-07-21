@@ -23,6 +23,8 @@ import org.finance.mybtc.api.huobi.eth.response.Symbol;
 import org.finance.mybtc.api.huobi.eth.response.Tick;
 import org.finance.mybtc.utils.JsonUtil;
 import org.nutz.lang.Strings;
+import org.nutz.log.Log;
+import org.nutz.log.Logs;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -39,6 +41,8 @@ import okhttp3.Response;
  * @author liaoxuefeng
  */
 public class HuobiEthClient {
+
+	private static Log log = Logs.get();
 
 	static final int CONN_TIMEOUT = 5;
 	static final int READ_TIMEOUT = 5;
@@ -174,6 +178,7 @@ public class HuobiEthClient {
 
 	/**
 	 * 买卖操作
+	 * 
 	 * @param accountId
 	 * @param num
 	 * @param price
@@ -235,86 +240,108 @@ public class HuobiEthClient {
 				});
 		return resp.checkAndReturn();
 	}
-	
+
 	/**
 	 * 虚拟币提现
+	 * 
 	 * @param currency
 	 * @param addressStr
 	 * @param amount
 	 * @return
 	 */
-	public long withdraw(String currency,String addressStr,String amount){
+	public long withdraw(String currency, String addressStr, String amount) {
 		List<Address> addressList = getWithdrawAddress(currency);
-		long addressId = 0; 
-		for(Address tmpAddress : addressList){
-			if(Strings.equals(tmpAddress.getAddress(), addressStr)){
+		long addressId = 0;
+		for (Address tmpAddress : addressList) {
+			if (Strings.equals(tmpAddress.getAddress(), addressStr)) {
 				addressId = tmpAddress.getId();
 				break;
 			}
 		}
-		if(addressId == 0){
+		if (addressId == 0) {
 			return 0;
 		}
 		long withdrawId = createWithdraw(addressId, amount);
-		if(withdrawId == 0){
+		if (withdrawId == 0) {
 			return withdrawId;
 		}
 		return placeWithdraw(withdrawId);
 	}
-	
+
 	/**
 	 * 查询虚拟币提现地址
+	 * 
 	 * @param currency
 	 * @return
 	 */
-	private List<Address> getWithdrawAddress(String currency){
+	private List<Address> getWithdrawAddress(String currency) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("currency", currency);
-		ApiResponse<List<Address>> resp = get("/v1/dw/withdraw-virtual/addresses", params, new TypeReference<ApiResponse<List<Address>>>() {
-		});
+		ApiResponse<List<Address>> resp = get("/v1/dw/withdraw-virtual/addresses", params,
+				new TypeReference<ApiResponse<List<Address>>>() {
+				});
 		return resp.checkAndReturn();
 	}
-	
+
 	/**
-	 *  申请提现虚拟币
+	 * 申请提现虚拟币
+	 * 
 	 * @param addressId
 	 * @param amount
 	 * @return
 	 */
-	private long createWithdraw(long addressId,String amount){
+	private long createWithdraw(long addressId, String amount) {
 		CreateWithdrawRequest request = new CreateWithdrawRequest();
 		request.setAddressId(addressId);
 		request.setAmount(amount);
-		ApiResponse<Long> resp = post("/v1/dw/withdraw-virtual/create", request, new TypeReference<ApiResponse<Long>>() {
-		});
+		ApiResponse<Long> resp = post("/v1/dw/withdraw-virtual/create", request,
+				new TypeReference<ApiResponse<Long>>() {
+				});
 		return resp.checkAndReturn();
 	}
-	
+
 	/**
 	 * 确认申请虚拟币提现
+	 * 
 	 * @param withdrawId
 	 * @return
 	 */
-	private long placeWithdraw(long withdrawId){
-		ApiResponse<Long> resp = post("/v1/dw/withdraw-virtual/" + withdrawId + "/place", null, new TypeReference<ApiResponse<Long>>() {
-		});
+	private long placeWithdraw(long withdrawId) {
+		ApiResponse<Long> resp = post("/v1/dw/withdraw-virtual/" + withdrawId + "/place", null,
+				new TypeReference<ApiResponse<Long>>() {
+				});
 		return resp.checkAndReturn();
 	}
-	
-	
-	
 
 	// send a GET request.
 	<T> T get(String uri, Map<String, String> params, TypeReference<T> ref) {
 		if (params == null) {
 			params = new HashMap<>();
 		}
-		return call("GET", uri, null, params, ref);
+		T instance = null;
+		for (int i = 0; i < 10; i++) {
+			try {
+				instance = call("GET", uri, null, params, ref);
+				break;
+			} catch (Exception e) {
+				log.error(e.getMessage());
+			}
+		}
+		return instance;
 	}
 
 	// send a POST request.
 	<T> T post(String uri, Object object, TypeReference<T> ref) {
-		return call("POST", uri, object, new HashMap<String, String>(), ref);
+		T instance = null;
+		for (int i = 0; i < 10; i++) {
+			try {
+				instance = call("POST", uri, object, new HashMap<String, String>(), ref);
+				break;
+			} catch (Exception e) {
+				log.error(e.getMessage());
+			}
+		}
+		return instance;
 	}
 
 	// call api by endpoint.

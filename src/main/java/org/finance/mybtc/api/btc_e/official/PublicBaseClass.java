@@ -74,7 +74,12 @@ abstract class PublicBaseClass extends CommonClass {
      */
     public synchronized boolean setData(String json) {
         try {
-            rootNode = mapper.readTree(json);
+            if(json.startsWith("{") || json.startsWith("[")){
+            	log.debug("json is  " + json);
+            	rootNode = mapper.readTree(json);
+            }else{
+            	log.error( "setData is not json ; jsonStr" + json); 
+            }
             it = rootNode.fieldNames();
             if (it != null) {
                 if (!rootNode.path("success").toString().equals("0")) {
@@ -84,6 +89,7 @@ abstract class PublicBaseClass extends CommonClass {
                 }
             }
         } catch (Exception e) {
+        	e.printStackTrace();
         }
         makeDefaultRootNode();
         success = false;

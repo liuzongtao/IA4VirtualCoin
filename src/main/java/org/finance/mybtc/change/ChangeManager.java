@@ -37,6 +37,9 @@ public class ChangeManager {
 		BTC_EClient client = new BTC_EClient();
 		Map<String, Ticker> tickerMap = client.getTickerMap(EBTC_EPairType.LTC_BTC.getValue(),EBTC_EPairType.ETH_BTC.getValue(),EBTC_EPairType.ETH_LTC.getValue());
 		Map<EBTC_EPairType, Float> priceMap = new HashMap<EBTC_EPairType, Float>();
+		if(tickerMap == null){
+			return priceMap;
+		}
 		for(String key : tickerMap.keySet()){
 			Ticker ticker = tickerMap.get(key);
 			float buyPrice = ticker.getBuy();

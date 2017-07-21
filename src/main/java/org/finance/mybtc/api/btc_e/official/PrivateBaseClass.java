@@ -1,7 +1,10 @@
 package org.finance.mybtc.api.btc_e.official;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -73,4 +76,32 @@ abstract class PrivateBaseClass extends CommonClass {
     public synchronized String getErrorMessage() {
         return rootNode.path("error").asText();
     }
+    
+    public String convertStreamToString(InputStream is) {
+    	if(is == null){
+    		return "";
+    	}
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+		StringBuilder sb = new StringBuilder();
+		String line = null;
+		try {
+			int index = 0;
+			while ((line = reader.readLine()) != null) {
+				if (index != 0) {
+					sb.append("\n");
+				}
+				sb.append(line);
+				index++;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return sb.toString();
+	}
 }

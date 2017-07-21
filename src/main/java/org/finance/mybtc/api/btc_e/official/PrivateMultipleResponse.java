@@ -11,18 +11,26 @@ abstract class PrivateMultipleResponse extends PrivateBaseClass {
             it = null;
             localTimestamp = 0;
             success = false;
-            rootNode = mapper.readTree(json);
-            if (rootNode.path("success").toString().equals("1")) {
-                it = rootNode.path("return").fieldNames();
-                if (it != null) {
-                    localTimestamp = System.currentTimeMillis();
-                    success = true;
+            String jsonStr = convertStreamToString(json);
+            if(jsonStr.startsWith("{") || jsonStr.startsWith("[")){
+            	log.debug("json is  " + jsonStr);
+            	rootNode = mapper.readTree(jsonStr);
+                if (rootNode.path("success").toString().equals("1")) {
+                    it = rootNode.path("return").fieldNames();
+                    if (it != null) {
+                        localTimestamp = System.currentTimeMillis();
+                        success = true;
+                        return;
+                    }
+                } else if (getErrorMessage().length() != 0) {
+                	log.error(getErrorMessage());
                     return;
                 }
-            } else if (getErrorMessage().length() != 0) {
-                return;
+            }else{
+            	log.error( "setData is not json ; jsonStr" + jsonStr); 
             }
         } catch (Exception e) {
+        	e.printStackTrace();
         }
         makeDefaultRootNode();
     }

@@ -34,4 +34,7 @@ public enum EBitfinexSymbols {
 		this.currency2 = currency2;
 	}
 	
+	public static EBitfinexSymbols getEBitfinexSymbols(String pair){
+		return EBitfinexSymbols.valueOf(pair.toUpperCase());
+	}
 }

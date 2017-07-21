@@ -9,7 +9,7 @@ import org.finance.mybtc.apiManager.BitfinexCoinFactory;
 import org.finance.mybtc.apiManager.ESymbol;
 import org.finance.mybtc.apiManager.HuobiCoinFactory;
 import org.finance.mybtc.apiManager.IVirtualCoin;
-import org.finance.mybtc.change.AChange;
+import org.finance.mybtc.change.AHuobiChange;
 import org.finance.mybtc.change.bean.ChangeInfo;
 import org.finance.mybtc.constant.Const;
 import org.finance.mybtc.core.config.Configs;
@@ -18,7 +18,7 @@ import org.finance.mybtc.core.config.Configs;
  * @author zongtao liu
  *
  */
-public class Ltc_BtcChangeImpl extends AChange {
+public class Ltc_BtcChangeImpl extends AHuobiChange {
 
 	@Override
 	public int getFromDigit() {

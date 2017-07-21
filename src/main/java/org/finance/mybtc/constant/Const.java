@@ -17,13 +17,13 @@ public class Const {
 	public static final int LTC_DIGIT = 2;
 	public static final int ETH_DIGIT = 2;
 	
-	public static final float HUOBI_BTC_WITHDRAW_FEE = 0.0015f;
-	public static final float HUOBI_LTC_WITHDRAW_FEE = 0.001f;
+	public static final float HUOBI_BTC_WITHDRAW_FEE = 0.0016f;
+	public static final float HUOBI_LTC_WITHDRAW_FEE = 0.0015f;
 	public static final float HUOBI_ETH_WITHDRAW_FEE = 0;
 	
-	public static final float BTC_E_BTC_WITHDRAW_FEE = 0.001f;
-	public static final float BTC_E_LTC_WITHDRAW_FEE = 0.001f;
-	public static final float BTC_E_ETH_WITHDRAW_FEE = 0.001f;
+	public static final float BTC_E_BTC_WITHDRAW_FEE = 0.0012f;
+	public static final float BTC_E_LTC_WITHDRAW_FEE = 0.0012f;
+	public static final float BTC_E_ETH_WITHDRAW_FEE = 0.0012f;
 	
 	public static final float BITFINEX_BTC_WITHDRAW_FEE = 0.0004f;
 	public static final float BITFINEX_LTC_WITHDRAW_FEE = 0.001f;
@@ -31,5 +31,15 @@ public class Const {
 	
 	public static final float HUOBI_TRADE_FEE_BUY = 0.002f;
 	public static final float HUOBI_TRADE_FEE_SELL = 0.002f;
+	
+	public static final float OKCOIN_BTC_WITHDRAW_FEE = 0.0022f;
+	public static final float OKCOIN_LTC_WITHDRAW_FEE = 0.0015f;
+	public static final float OKCOIN_ETH_WITHDRAW_FEE = 0.01f;
+	
+	public static final float OKCOIN_TRADE_FEE_BUY = 0.002f;
+	public static final float OKCOIN_TRADE_FEE_SELL = 0.002f;
+	
+	public static final float OKCOIN_TRADE_FEE_BUY_ETH = 0.0005f;
+	public static final float OKCOIN_TRADE_FEE_SELL_ETH = 0.0005f;
 	
 }

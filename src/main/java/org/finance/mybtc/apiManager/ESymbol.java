@@ -9,7 +9,7 @@ package org.finance.mybtc.apiManager;
  */
 public enum ESymbol {
 
-	BTC("btc"), LTC("ltc"), ETH("eth"), USD("usd"), RMB("rmb"),;
+	BTC("btc"), LTC("ltc"), ETH("eth"), USD("usd"), CNY("cny"),;
 
 	private String value;
 

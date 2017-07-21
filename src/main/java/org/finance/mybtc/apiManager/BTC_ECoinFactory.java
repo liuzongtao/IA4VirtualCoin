@@ -10,10 +10,10 @@ import java.util.Map;
 
 import org.finance.mybtc.api.btc_e.official.EBTC_ESymbol;
 import org.finance.mybtc.api.huobi.beans.EHuobiSymbol;
-import org.finance.mybtc.apiManager.impl.ABTC_ECoin;
-import org.finance.mybtc.apiManager.impl.BTC_EBtcImpl;
-import org.finance.mybtc.apiManager.impl.BTC_EEthImpl;
-import org.finance.mybtc.apiManager.impl.BTC_ELtcImpl;
+import org.finance.mybtc.apiManager.impl.btc_e.ABTC_ECoin;
+import org.finance.mybtc.apiManager.impl.btc_e.BTC_EBtcImpl;
+import org.finance.mybtc.apiManager.impl.btc_e.BTC_EEthImpl;
+import org.finance.mybtc.apiManager.impl.btc_e.BTC_ELtcImpl;
 
 /**
  * @author zongtao liu

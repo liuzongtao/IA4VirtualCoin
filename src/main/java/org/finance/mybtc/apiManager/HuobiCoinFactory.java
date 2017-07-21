@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.finance.mybtc.api.huobi.beans.EHuobiSymbol;
-import org.finance.mybtc.apiManager.impl.HuobiBtcImpl;
-import org.finance.mybtc.apiManager.impl.HuobiCny4NewAreaImpl;
-import org.finance.mybtc.apiManager.impl.HuobiCny4OldAreaImpl;
-import org.finance.mybtc.apiManager.impl.HuobiEthImpl;
-import org.finance.mybtc.apiManager.impl.HuobiLtcImpl;
+import org.finance.mybtc.apiManager.impl.huobi.HuobiBtcImpl;
+import org.finance.mybtc.apiManager.impl.huobi.HuobiCny4NewAreaImpl;
+import org.finance.mybtc.apiManager.impl.huobi.HuobiCny4OldAreaImpl;
+import org.finance.mybtc.apiManager.impl.huobi.HuobiEthImpl;
+import org.finance.mybtc.apiManager.impl.huobi.HuobiLtcImpl;
 
 /**
  * @author zongtao liu

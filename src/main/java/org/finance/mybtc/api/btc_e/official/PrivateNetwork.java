@@ -1,7 +1,5 @@
 package org.finance.mybtc.api.btc_e.official;
 
-import org.apache.commons.codec.binary.Hex;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -12,7 +10,14 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.commons.codec.binary.Hex;
+import org.nutz.log.Log;
+import org.nutz.log.Logs;
+
 final public class PrivateNetwork {
+	
+	private static Log log = Logs.get();
+	
     private StringCrypter userEncryptKeys;
     private String apiKey = "";
     private boolean flagTryProxyHook = false;
@@ -108,9 +113,9 @@ final public class PrivateNetwork {
         return hashCode.toString();
     }
 
-    InputStream sendRequest(String name, String params, int connectMillis, int readMillis) {
+    InputStream baseSendRequest(String name, String params, int connectMillis, int readMillis) {
         try {
-            Long nonce = System.currentTimeMillis() / 100L - 14247195500L;
+            Long nonce = System.currentTimeMillis() / 1000L;// - 14247195500L;
             String postData = "method=" + name + "&" + params + "nonce="
                     + nonce.toString();
             HttpURLConnection connection = (HttpURLConnection) new URL(Mirrors.getMirror() + API_URL).openConnection();
@@ -128,7 +133,25 @@ final public class PrivateNetwork {
             os.close();
             return connection.getInputStream();
         } catch (Exception e) {
+        	log.error(e.getMessage());
             return null;
         }
+    }
+    
+    InputStream sendRequest(String name, String params, int connectMillis, int readMillis) {
+    	InputStream in = null;
+    	for(int i = 0 ;i < 10 ;i ++){
+    		in = baseSendRequest(name, params, connectMillis, readMillis);
+    		if(in != null){
+    			break;
+    		}else{
+    			try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+    		}
+    	}
+    	return in;
     }
 }
