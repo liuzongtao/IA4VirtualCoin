@@ -104,7 +104,7 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 		boolean result = false;
 		EBTC_EPairType pair = getSellSmybol(fromSymbol);
 		float[] priceArr = getBidAndAskPrice(pair.toString());
-		Trade trade = trade(pair, "buy", priceArr[1], (amount / priceArr[1]));
+		Trade trade = trade(pair, "buy", 0.5f, (amount / priceArr[1]));
 		if (trade != null && Float.valueOf(trade.getReceived()) > 0) {
 			result = true;
 		}
@@ -120,8 +120,7 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 	public boolean sellMarket(ESymbol toSymbol, float amount) {
 		boolean result = false;
 		EBTC_EPairType pair = getSellSmybol(toSymbol);
-		float[] priceArr = getBidAndAskPrice(pair.toString());
-		Trade trade = trade(pair, "sell", priceArr[0], amount);
+		Trade trade = trade(pair, "sell", 0.5f, amount);
 		if (trade != null && Float.valueOf(trade.getReceived()) > 0) {
 			result = true;
 		}

@@ -32,7 +32,7 @@ public class MainTool {
 		if (args.length > 1) {
 			num = Float.valueOf(args[1]);
 		}
-		boolean isTest = false;
+		boolean isTest = true;
 		if (args.length > 2) {
 			isTest = Boolean.valueOf(args[2]);
 		}
