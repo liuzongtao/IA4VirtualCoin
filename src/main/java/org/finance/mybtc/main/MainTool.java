@@ -24,7 +24,7 @@ public class MainTool {
 
 	public static void main(String[] args) {
 		log.debug("args is " + Json.toJson(args, JsonFormat.compact()));
-		String pf = getPfInfo(EPfType.okcoin2btce);
+		String pf = getPfInfo(EPfType.okcoin2bitfinex);
 		if (args.length > 0) {
 			pf = args[0].toLowerCase();
 		}
@@ -36,7 +36,7 @@ public class MainTool {
 		if (args.length > 2) {
 			isTest = Boolean.valueOf(args[2]);
 		}
-		float wishProfit = 1.5f;
+		float wishProfit = 0.5f;
 		if (args.length > 3) {
 			wishProfit = Float.valueOf(args[3]);
 		}

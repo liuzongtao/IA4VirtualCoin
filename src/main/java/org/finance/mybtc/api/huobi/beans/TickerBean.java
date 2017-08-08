@@ -13,31 +13,31 @@ public class TickerBean {
 	/**
 	 * 开盘
 	 */
-	private float open;
+	private double open;
 	/***
 	 * 收盘价
 	 */
-	private float last;
+	private double last;
 	/**
 	 * 最低
 	 */
-	private float low;
+	private double low;
 	/**
 	 * 最高
 	 */
-	private float high;
+	private double high;
 	/**
 	 * 总量
 	 */
-	private float vol;
+	private double vol;
 	/**
 	 * 买价
 	 */
-	private float buy;
+	private double buy;
 	/**
 	 * 卖价
 	 */
-	private float sell;
+	private double sell;
 
 	/**
 	 * @return the symbol
@@ -57,7 +57,7 @@ public class TickerBean {
 	/**
 	 * @return the open
 	 */
-	public float getOpen() {
+	public double getOpen() {
 		return open;
 	}
 
@@ -65,14 +65,14 @@ public class TickerBean {
 	 * @param open
 	 *            the open to set
 	 */
-	public void setOpen(float open) {
+	public void setOpen(double open) {
 		this.open = open;
 	}
 
 	/**
 	 * @return the last
 	 */
-	public float getLast() {
+	public double getLast() {
 		return last;
 	}
 
@@ -80,14 +80,14 @@ public class TickerBean {
 	 * @param last
 	 *            the last to set
 	 */
-	public void setLast(float last) {
+	public void setLast(double last) {
 		this.last = last;
 	}
 
 	/**
 	 * @return the low
 	 */
-	public float getLow() {
+	public double getLow() {
 		return low;
 	}
 
@@ -95,14 +95,14 @@ public class TickerBean {
 	 * @param low
 	 *            the low to set
 	 */
-	public void setLow(float low) {
+	public void setLow(double low) {
 		this.low = low;
 	}
 
 	/**
 	 * @return the high
 	 */
-	public float getHigh() {
+	public double getHigh() {
 		return high;
 	}
 
@@ -110,14 +110,14 @@ public class TickerBean {
 	 * @param high
 	 *            the high to set
 	 */
-	public void setHigh(float high) {
+	public void setHigh(double high) {
 		this.high = high;
 	}
 
 	/**
 	 * @return the vol
 	 */
-	public float getVol() {
+	public double getVol() {
 		return vol;
 	}
 
@@ -125,14 +125,14 @@ public class TickerBean {
 	 * @param vol
 	 *            the vol to set
 	 */
-	public void setVol(float vol) {
+	public void setVol(double vol) {
 		this.vol = vol;
 	}
 
 	/**
 	 * @return the buy
 	 */
-	public float getBuy() {
+	public double getBuy() {
 		return buy;
 	}
 
@@ -140,14 +140,14 @@ public class TickerBean {
 	 * @param buy
 	 *            the buy to set
 	 */
-	public void setBuy(float buy) {
+	public void setBuy(double buy) {
 		this.buy = buy;
 	}
 
 	/**
 	 * @return the sell
 	 */
-	public float getSell() {
+	public double getSell() {
 		return sell;
 	}
 
@@ -155,7 +155,7 @@ public class TickerBean {
 	 * @param sell
 	 *            the sell to set
 	 */
-	public void setSell(float sell) {
+	public void setSell(double sell) {
 		this.sell = sell;
 	}
 

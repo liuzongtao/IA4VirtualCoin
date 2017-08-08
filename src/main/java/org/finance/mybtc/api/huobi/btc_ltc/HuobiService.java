@@ -324,7 +324,7 @@ public class HuobiService extends Base {
 	 * @return
 	 * @throws Exception
 	 */
-	public String withdrawCoin(EHuobiCoinType coinType, String withdrawAddr, float withdrawAmount,String tradePwd,  String market,float withdrawFee)
+	public String withdrawCoin(EHuobiCoinType coinType, String withdrawAddr, double withdrawAmount,String tradePwd,  String market,float withdrawFee)
 			throws Exception {
 		TreeMap<String, Object> paraMap = new TreeMap<String, Object>();
 		paraMap.put("method", WITHDRAW_COIN);
@@ -355,12 +355,7 @@ public class HuobiService extends Base {
 	 * @param withdrawAmount
 	 * @return
 	 */
-	private float getWithdrawAmount(EHuobiCoinType coinType, float withdrawAmount) {
-		if (coinType == EHuobiCoinType.BTC) {
-			withdrawAmount = DecimalUtil.decimalDown(withdrawAmount, 4);
-		} else if (coinType == EHuobiCoinType.LTC) {
-			withdrawAmount = DecimalUtil.decimalDown(withdrawAmount, 4);
-		}
+	private double getWithdrawAmount(EHuobiCoinType coinType, double withdrawAmount) {
 		return withdrawAmount;
 	}
 	

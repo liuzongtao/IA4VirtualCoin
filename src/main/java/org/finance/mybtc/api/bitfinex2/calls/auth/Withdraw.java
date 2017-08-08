@@ -12,7 +12,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class Withdraw extends HttpBitfinex {
 
-	public Withdraw(String withdrawType, String wallet, float amount, String address) {
+	public Withdraw(String withdrawType, String wallet, double amount, String address) {
 		super("/withdraw");
 		addHeader("withdraw_type", withdrawType);
 		addHeader("walletselected", wallet);

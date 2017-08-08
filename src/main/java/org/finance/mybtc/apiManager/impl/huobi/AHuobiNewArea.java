@@ -16,12 +16,13 @@ import org.finance.mybtc.core.config.Configs;
  *
  */
 public abstract class AHuobiNewArea implements IVirtualCoin {
-	
-	protected HuobiEthClient client = new HuobiEthClient(Configs.API_CONFIG_HUOBI.getApiKey(),Configs.API_CONFIG_HUOBI.getApiSecret());
-	
+
+	protected HuobiEthClient client = new HuobiEthClient(Configs.API_CONFIG_HUOBI.getApiKey(),
+			Configs.API_CONFIG_HUOBI.getApiSecret());
 
 	/**
 	 * 获取账号id
+	 * 
 	 * @return
 	 */
 	protected long getAccountId() {
@@ -36,16 +37,16 @@ public abstract class AHuobiNewArea implements IVirtualCoin {
 		return accountId;
 	}
 
-
-	/* (non-Javadoc)
-	 * @see org.finance.mybtc.apiManager.IVirtualCoin#exchange(java.lang.String, float)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.finance.mybtc.apiManager.IVirtualCoin#exchange(java.lang.String,
+	 * float)
 	 */
 	@Override
-	public boolean exchange(ESymbol toSymbol, float amount) {
+	public boolean exchange(ESymbol toSymbol, double amount) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
 
 }

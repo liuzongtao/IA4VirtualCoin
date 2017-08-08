@@ -9,15 +9,15 @@ package org.finance.mybtc.api.okCoin.beans;
  */
 public class OkcoinCurrency {
 
-	private float cny;
-	private float btc;
-	private float ltc;
-	private float eth;
+	private double cny;
+	private double btc;
+	private double ltc;
+	private double eth;
 
 	/**
 	 * @return the cny
 	 */
-	public float getCny() {
+	public double getCny() {
 		return cny;
 	}
 
@@ -25,14 +25,14 @@ public class OkcoinCurrency {
 	 * @param cny
 	 *            the cny to set
 	 */
-	public void setCny(float cny) {
+	public void setCny(double cny) {
 		this.cny = cny;
 	}
 
 	/**
 	 * @return the btc
 	 */
-	public float getBtc() {
+	public double getBtc() {
 		return btc;
 	}
 
@@ -40,14 +40,14 @@ public class OkcoinCurrency {
 	 * @param btc
 	 *            the btc to set
 	 */
-	public void setBtc(float btc) {
+	public void setBtc(double btc) {
 		this.btc = btc;
 	}
 
 	/**
 	 * @return the ltc
 	 */
-	public float getLtc() {
+	public double getLtc() {
 		return ltc;
 	}
 
@@ -55,14 +55,14 @@ public class OkcoinCurrency {
 	 * @param ltc
 	 *            the ltc to set
 	 */
-	public void setLtc(float ltc) {
+	public void setLtc(double ltc) {
 		this.ltc = ltc;
 	}
 
 	/**
 	 * @return the eth
 	 */
-	public float getEth() {
+	public double getEth() {
 		return eth;
 	}
 
@@ -70,7 +70,7 @@ public class OkcoinCurrency {
 	 * @param eth
 	 *            the eth to set
 	 */
-	public void setEth(float eth) {
+	public void setEth(double eth) {
 		this.eth = eth;
 	}
 

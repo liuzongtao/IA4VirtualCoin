@@ -75,7 +75,7 @@ public class BitfinexEthImpl extends ABitfinexCoin {
 	 * apiManager.ESymbol, float)
 	 */
 	@Override
-	public boolean exchange(ESymbol toSymbol, float amount) {
+	public boolean exchange(ESymbol toSymbol, double amount) {
 		boolean result = false;
 		switch (toSymbol) {
 		case BTC:

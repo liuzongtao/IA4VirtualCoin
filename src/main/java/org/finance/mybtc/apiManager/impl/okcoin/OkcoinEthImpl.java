@@ -15,21 +15,25 @@ import org.finance.mybtc.constant.Const;
  */
 public class OkcoinEthImpl extends AOkcoin {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getCoinNum()
 	 */
 	@Override
-	public float getCoinNum() {
-		float coinNum = 0;
+	public double getCoinNum() {
+		double coinNum = 0;
 		OkcoinUserInfo okcoinUserInfo = getOkcoinUserInfo();
-		if(okcoinUserInfo != null){
+		if (okcoinUserInfo != null) {
 			OkcoinFundsInfo info = okcoinUserInfo.getInfo();
 			coinNum = info.getFunds().getFree().getEth();
 		}
 		return coinNum;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.finance.mybtc.apiManager.impl.okcoin.AOkcoin#getSmybol()
 	 */
 	@Override
@@ -37,15 +41,19 @@ public class OkcoinEthImpl extends AOkcoin {
 		return EOkcoinSymbols.ETH;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.finance.mybtc.apiManager.impl.okcoin.AOkcoin#getWithdrawFees()
 	 */
 	@Override
 	public float getWithdrawFees() {
 		return Const.OKCOIN_ETH_WITHDRAW_FEE;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getESymbol()
 	 */
 	@Override

@@ -20,11 +20,11 @@ public abstract class APfExchange {
 
 	private static long lastSendEmail = 0;
 
-	public abstract AChange preChange(float totalMoney, float wishProfit);
+	public abstract AChange preChange(double totalMoney, float wishProfit);
 	
 	public abstract void execExchangeByType(String type);
 
-	public boolean execExchange(float testMoney, boolean isTest, float wishProfit) {
+	public boolean execExchange(double testMoney, boolean isTest, float wishProfit) {
 		boolean result = false;
 		AChange preChange = preChange(testMoney, wishProfit);
 		// 测试使用

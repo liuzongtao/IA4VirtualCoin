@@ -17,7 +17,8 @@ import org.nutz.lang.Strings;
  */
 public abstract class AHuobiOldArea implements IVirtualCoin {
 
-	protected HuobiService service = new HuobiService(Configs.API_CONFIG_HUOBI.getApiKey(),Configs.API_CONFIG_HUOBI.getApiSecret());
+	protected HuobiService service = new HuobiService(Configs.API_CONFIG_HUOBI.getApiKey(),
+			Configs.API_CONFIG_HUOBI.getApiSecret());
 
 	/**
 	 * 获取个人资产信息
@@ -37,14 +38,15 @@ public abstract class AHuobiOldArea implements IVirtualCoin {
 		return account;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.finance.mybtc.apiManager.IVirtualCoin#exchange(java.lang.String, float)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.finance.mybtc.apiManager.IVirtualCoin#exchange(java.lang.String,
+	 * float)
 	 */
 	@Override
-	public boolean exchange(ESymbol toSymbol, float amount) {
+	public boolean exchange(ESymbol toSymbol, double amount) {
 		return false;
 	}
-	
-	
 
 }

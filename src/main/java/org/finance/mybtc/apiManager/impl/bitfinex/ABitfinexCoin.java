@@ -41,21 +41,22 @@ public abstract class ABitfinexCoin implements IVirtualCoin{
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getBidAndAskPrice()
 	 */
 	@Override
-	public float[] getBidAndAskPrice(String pair) {
+	public double[] getBidAndAskPrice(String pair) {
 		return getBidAndAskPrice(EBitfinexSymbols.getEBitfinexSymbols(pair));
 	}
 	
-	public float[] getBidAndAskPrice(EBitfinexSymbols symbol) {
-		float[] result = null;
+	public double[] getBidAndAskPrice(EBitfinexSymbols symbol) {
+		double[] result = null;
 		try {
 			TickerResponse pubticker = bitfinex.pubticker(symbol);
 			if (pubticker != null) {
-				result = new float[2];
-				result[0] = Float.valueOf(pubticker.getBid() + "");
-				result[1] = Float.valueOf(pubticker.getAsk() + "");
+				result = new double[2];
+				result[0] = Double.valueOf(pubticker.getBid() + "");
+				result[1] = Double.valueOf(pubticker.getAsk() + "");
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage());
+			e.printStackTrace();
 		}
 		return result;
 	}
@@ -64,7 +65,7 @@ public abstract class ABitfinexCoin implements IVirtualCoin{
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getCoinNum()
 	 */
 	@Override
-	public float getCoinNum() {
+	public double getCoinNum() {
 		float coinNum = 0;
 		BalancesResponse balance = getBalancesResponse();
 		if (balance != null) {
@@ -77,11 +78,11 @@ public abstract class ABitfinexCoin implements IVirtualCoin{
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#buyMarket(float)
 	 */
 	@Override
-	public boolean buyMarket(ESymbol fromSymbol,float amount) {
+	public boolean buyMarket(ESymbol fromSymbol,double amount) {
 		boolean result = false;
 		try {
-			float[] bidAndAskPrice = getBidAndAskPrice(getBuySmybol(fromSymbol));
-			NewOrderResponse marginBuyMarket = bitfinex.exchangeBuyMarket(getBuySmybol(fromSymbol), amount, bidAndAskPrice[1]);
+			double[] bidAndAskPrice = getBidAndAskPrice(getBuySmybol(fromSymbol));
+			NewOrderResponse marginBuyMarket = bitfinex.exchangeBuyMarket(getBuySmybol(fromSymbol), amount / bidAndAskPrice[1], 1 / bidAndAskPrice[1]);
 			if(marginBuyMarket == null){
 				log.error("marginBuyMarket is null !");
 			}else {
@@ -101,11 +102,11 @@ public abstract class ABitfinexCoin implements IVirtualCoin{
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#sellMarket(float)
 	 */
 	@Override
-	public boolean sellMarket(ESymbol toSymbol,float amount) {
+	public boolean sellMarket(ESymbol toSymbol,double amount) {
 		boolean result = false;
 		try {
-			float[] bidAndAskPrice = getBidAndAskPrice(getSellSmybol(toSymbol));
-			NewOrderResponse marginSellMarket = bitfinex.exchangeSellMarket(getSellSmybol(toSymbol), Double.valueOf(amount+""), bidAndAskPrice[0]);
+			double[] bidAndAskPrice = getBidAndAskPrice(getSellSmybol(toSymbol));
+			NewOrderResponse marginSellMarket = bitfinex.exchangeSellMarket(getSellSmybol(toSymbol), amount, bidAndAskPrice[0]);
 			if(marginSellMarket == null){
 				log.error("marginSellMarket is null !");
 			}else {
@@ -125,7 +126,7 @@ public abstract class ABitfinexCoin implements IVirtualCoin{
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#withdrawCoin(float)
 	 */
 	@Override
-	public boolean withdrawCoin(float amount,String address) {
+	public boolean withdrawCoin(double amount,String address) {
 		boolean result = false;
 		try {
 			WithdrawResponse withdraw = bitfinex.withdraw(getWithdrawType(), EBitfinexWalletType.EXCHANGE.getValue(), amount - getWithdrawFees(), address);

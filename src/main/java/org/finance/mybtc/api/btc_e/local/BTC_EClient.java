@@ -52,7 +52,13 @@ public class BTC_EClient {
 			}
 		}
 		if(response != null && Strings.isNotBlank(response.getContent())){
-			result = Json.fromJsonAsMap(Ticker.class, response.getContent());
+			String content = response.getContent();
+			if(content.startsWith("[") || content.startsWith("{")){
+				result = Json.fromJsonAsMap(Ticker.class, response.getContent());
+			}else{
+				log.error("content is not json !!!");
+				log.debug(content);
+			}
 		}
 		return result;
 	}

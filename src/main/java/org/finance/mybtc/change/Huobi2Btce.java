@@ -25,7 +25,7 @@ import org.nutz.json.JsonFormat;
 public class Huobi2Btce extends APfExchange {
 
 	@Override
-	public AChange preChange(float totalMoney,float wishProfit) {
+	public AChange preChange(double totalMoney,float wishProfit) {
 		AChange changeImpl = null;
 		HuobiCoinFactory huobiFactory = HuobiCoinFactory.getInstance();
 		IVirtualCoin cnyInfo = huobiFactory.getVirtualCoin(EHuobiSymbol.CNY_OLD);
@@ -34,17 +34,17 @@ public class Huobi2Btce extends APfExchange {
 		}
 
 		IVirtualCoin btcInfo = huobiFactory.getVirtualCoin(EHuobiSymbol.BTC);
-		float[] huobiBtcBidAndAskPrice = btcInfo.getBidAndAskPrice(EHuobiSymbol.BTC.toString());
-		float btcSellPrice = huobiBtcBidAndAskPrice[0];
-		float btcBuyPrice = huobiBtcBidAndAskPrice[1];
+		double[] huobiBtcBidAndAskPrice = btcInfo.getBidAndAskPrice(EHuobiSymbol.BTC.toString());
+		double btcSellPrice = huobiBtcBidAndAskPrice[0];
+		double btcBuyPrice = huobiBtcBidAndAskPrice[1];
 		IVirtualCoin ltcInfo = huobiFactory.getVirtualCoin(EHuobiSymbol.LTC);
-		float[] huobiLtcbidAndAskPrice = ltcInfo.getBidAndAskPrice(EHuobiSymbol.LTC.toString());
-		float ltcSellPrice = huobiLtcbidAndAskPrice[0];
-		float ltcBuyPrice = huobiLtcbidAndAskPrice[1];
+		double[] huobiLtcbidAndAskPrice = ltcInfo.getBidAndAskPrice(EHuobiSymbol.LTC.toString());
+		double ltcSellPrice = huobiLtcbidAndAskPrice[0];
+		double ltcBuyPrice = huobiLtcbidAndAskPrice[1];
 		IVirtualCoin ethInfo = huobiFactory.getVirtualCoin(EHuobiSymbol.ETH);
-		float[] huobiEthBidAndAskPrice = ethInfo.getBidAndAskPrice(EHuobiSymbol.ETH.toString());
-		float ethSellPrice = huobiEthBidAndAskPrice[0];
-		float ethBuyPrice = huobiEthBidAndAskPrice[1];
+		double[] huobiEthBidAndAskPrice = ethInfo.getBidAndAskPrice(EHuobiSymbol.ETH.toString());
+		double ethSellPrice = huobiEthBidAndAskPrice[0];
+		double ethBuyPrice = huobiEthBidAndAskPrice[1];
 
 		ChangeManager changeManager = ChangeManager.getInstance();
 		Map<EBTC_EPairType, Float> priceMap = changeManager.getPriceFromBTC_E();

@@ -25,17 +25,17 @@ public class HuobiEthImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getBidAndAskPrice()
 	 */
 	@Override
-	public float[] getBidAndAskPrice(String pair) {
-		float[] result = new float[2];
+	public double[] getBidAndAskPrice(String pair) {
+		double[] result = new double[2];
 		Tick tick = getTick();
 		if (tick != null) {
 			Object[][] bids = tick.getBids();
 			if (bids.length > 0) {
-				result[0] = Float.valueOf(String.valueOf(bids[0][0]));
+				result[0] = Double.valueOf(String.valueOf(bids[0][0]));
 			}
 			Object[][] asks = tick.getAsks();
 			if (asks.length > 0) {
-				result[1] = Float.valueOf(String.valueOf(asks[0][0]));
+				result[1] = Double.valueOf(String.valueOf(asks[0][0]));
 			}
 		}
 		return result;
@@ -47,8 +47,8 @@ public class HuobiEthImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getCoinNum()
 	 */
 	@Override
-	public float getCoinNum() {
-		float coinNum = 0;
+	public double getCoinNum() {
+		double coinNum = 0;
 		long accountId = getAccountId();
 		if (accountId == 0) {
 			return 0;
@@ -59,7 +59,7 @@ public class HuobiEthImpl extends AHuobiNewArea {
 			for (BalanceInfo tmpBalanceInfo : list) {
 				if (Strings.equals(BalanceInfo.CURRENCY_ETH, tmpBalanceInfo.getCurrency())
 						&& Strings.equals(BalanceInfo.TYPE_TRADE, tmpBalanceInfo.getType())) {
-					coinNum = Float.valueOf(tmpBalanceInfo.getBalance());
+					coinNum = Double.valueOf(tmpBalanceInfo.getBalance());
 				}
 			}
 		}
@@ -72,7 +72,7 @@ public class HuobiEthImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#buyMarket(float)
 	 */
 	@Override
-	public boolean buyMarket(ESymbol fromSymbol,float amount) {
+	public boolean buyMarket(ESymbol fromSymbol, double amount) {
 		long accountId = getAccountId();
 		if (accountId == 0) {
 			return false;
@@ -90,7 +90,7 @@ public class HuobiEthImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#sellMarket(float)
 	 */
 	@Override
-	public boolean sellMarket(ESymbol toSymbol,float amount) {
+	public boolean sellMarket(ESymbol toSymbol, double amount) {
 		long accountId = getAccountId();
 		if (accountId == 0) {
 			return false;
@@ -108,7 +108,7 @@ public class HuobiEthImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#withdrawCoin(float)
 	 */
 	@Override
-	public boolean withdrawCoin(float amount, String address) {
+	public boolean withdrawCoin(double amount, String address) {
 		long withdrawId = client.withdraw(BalanceInfo.CURRENCY_ETH, address, String.valueOf(amount));
 		if (withdrawId > 0) {
 			return true;
@@ -120,8 +120,10 @@ public class HuobiEthImpl extends AHuobiNewArea {
 		Tick tick = client.getKline4Depth(EHuobiSymbol.ETH.getValue(), EHuobiStepType.STEP_0.getValue());
 		return tick;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getESymbol()
 	 */
 	@Override

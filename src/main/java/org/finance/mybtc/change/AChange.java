@@ -5,7 +5,6 @@ package org.finance.mybtc.change;
 
 import org.finance.mybtc.apiManager.IVirtualCoin;
 import org.finance.mybtc.change.bean.ChangeInfo;
-import org.finance.mybtc.utils.DecimalUtil;
 import org.nutz.log.Log;
 import org.nutz.log.Logs;
 
@@ -14,7 +13,7 @@ import org.nutz.log.Logs;
  *
  */
 public abstract class AChange implements Ichange {
-	
+
 	private float wishProfit;
 
 	protected static Log log = Logs.get();
@@ -26,15 +25,16 @@ public abstract class AChange implements Ichange {
 	public abstract float getFromWithdrawFee();
 
 	public abstract float getOtherPfWithdrawFee();
-	
+
 	public abstract float getBuyFee();
-	
+
 	public abstract float getSellFee();
 
 	protected static long sleepTime = 30 * 1000l;
 
 	@Override
-	public float preChange(float totalMoney, float fromCoinBuyPrice, float toCoinSellPrice, float otherPfChangePrice) {
+	public float preChange(double totalMoney, double fromCoinBuyPrice, double toCoinSellPrice,
+			double otherPfChangePrice) {
 		log.debug("totalMoney = " + totalMoney + "; fromCoinBuyPrice = " + fromCoinBuyPrice + "; toCoinSellPrice = "
 				+ toCoinSellPrice + "; otherPfChangePrice = " + otherPfChangePrice);
 		if (totalMoney == 0) {
@@ -44,29 +44,30 @@ public abstract class AChange implements Ichange {
 		// 来源币位数
 		int fromDigit = getFromDigit();
 		// 购买获得的数量
-		float fromCoinNum = canBuyNum(totalMoney, fromCoinBuyPrice, fromDigit);
+		double fromCoinNum = canBuyNum(totalMoney, fromCoinBuyPrice, fromDigit);
 		// 剩余钱数
-		float surplusMoney = totalMoney - fromCoinBuyPrice * fromCoinNum;
+		double surplusMoney = totalMoney - fromCoinBuyPrice * fromCoinNum;
 		// 实际到手的数量
-		fromCoinNum = DecimalUtil.decimalDown(fromCoinNum * (1 - getBuyFee()), fromDigit);
+		fromCoinNum = fromCoinNum * (1 - getBuyFee());
 		// 其他平台 收到的虚拟币的数量
 		fromCoinNum = fromCoinNum - getFromWithdrawFee();
 		// 终止币位数
 		int toDigit = getToDigit();
 		// 其他平台 的虚拟币数量
-		float toCoinNum = canBuyNum(fromCoinNum, otherPfChangePrice, toDigit);
+		double toCoinNum = canBuyNum(fromCoinNum, otherPfChangePrice, toDigit);
 		// 火币网收到虚拟币数量
 		toCoinNum = toCoinNum - getOtherPfWithdrawFee();
 		// 火币网虚拟币币兑现后资金
-		float newMoney = toCoinNum * toCoinSellPrice * (1 - getSellFee());
+		double newMoney = toCoinNum * toCoinSellPrice * (1 - getSellFee());
 		// 计算利润
-		float profit = (newMoney + surplusMoney - totalMoney) / totalMoney;
-		profit = DecimalUtil.decimalDown(profit * 100, 2);
-		return profit;
+		double profit = (newMoney + surplusMoney - totalMoney) / totalMoney;
+		profit = profit * 100;
+		return Float.valueOf(String.valueOf(profit));
 	}
 
-	public float canBuyNum(float amount, float price, int digit) {
-		return DecimalUtil.decimalDown(amount / price, digit);
+	public double canBuyNum(double amount, double price, int digit) {
+		return amount / price;
+		// return DecimalUtil.decimalDown(amount / price, digit);
 	}
 
 	/*
@@ -98,10 +99,10 @@ public abstract class AChange implements Ichange {
 			IVirtualCoin fromOtherCoin, IVirtualCoin toCoin, String withdrawAdd, String otherWithdrawAdd) {
 		int mySleepTime = 1000;
 		ChangeInfo info = new ChangeInfo();
-		float fromTotalNum = fromTotal.getCoinNum();
+		double fromTotalNum = fromTotal.getCoinNum();
 		info.addInfo("fromTotalNum", fromTotalNum);
 		// 获取当前平台 转换前币种 数量
-		float fromCoinNum = fromCoin.getCoinNum();
+		double fromCoinNum = fromCoin.getCoinNum();
 		info.addInfo("fromCoinNum", fromCoinNum);
 		// 购买当前平台 转换前币种
 		boolean fromBuy = fromCoin.buyMarket(null, fromTotalNum);
@@ -110,10 +111,10 @@ public abstract class AChange implements Ichange {
 			return info;
 		}
 		log.debug("fromBuy is " + fromBuy);
-
-		float fromCoinNum2 = fromCoin.getCoinNum();
+		sleep(mySleepTime * 60);
+		double fromCoinNum2 = fromCoin.getCoinNum();
 		info.addInfo("fromCoinNum2", fromCoinNum2);
-		float fromWithdrawNum = fromCoinNum2 - fromCoinNum;
+		double fromWithdrawNum = fromCoinNum2 - fromCoinNum;
 		// 进行提币
 		boolean fromWithdrawRes = fromCoin.withdrawCoin(fromWithdrawNum, otherWithdrawAdd);
 		int fromWithdrawResStep = 0;
@@ -125,11 +126,11 @@ public abstract class AChange implements Ichange {
 		}
 		log.debug("fromWithdrawRes is " + fromWithdrawRes + " , runnum == " + fromWithdrawResStep);
 
-		float toOtherCoinNum = toOtherCoin.getCoinNum();
+		double toOtherCoinNum = toOtherCoin.getCoinNum();
 		info.addInfo("toOtherCoinNum", toOtherCoinNum);
 		// 查询另一平台是否收到转换前币种
-		float addToOtherCoinNum = 0;
-		float toOtherCoinNum2 = 0;
+		double addToOtherCoinNum = 0;
+		double toOtherCoinNum2 = 0;
 		while (addToOtherCoinNum <= 0) {
 			sleep(sleepTime);
 			toOtherCoinNum2 = toOtherCoin.getCoinNum();
@@ -139,22 +140,24 @@ public abstract class AChange implements Ichange {
 				info.addInfo("addToOtherCoinNum", addToOtherCoinNum);
 			}
 		}
+		
 		// 在另一平台进行 币种转换
-		boolean otherCoinExchangeRes = toOtherCoin.exchange(fromOtherCoin.getESymbol(), addToOtherCoinNum);
+		boolean otherCoinExchangeRes = toOtherCoin.exchange(fromOtherCoin.getESymbol(), toOtherCoinNum2);
 		int otherCoinExchangeResStep = 0;
 		while (!otherCoinExchangeRes) {
 			log.error("otherCoinExchangeRes is " + otherCoinExchangeRes + " == " + otherCoinExchangeResStep + " == ");
 			sleep(mySleepTime);
-			otherCoinExchangeRes = toOtherCoin.exchange(fromOtherCoin.getESymbol(), addToOtherCoinNum);
+			otherCoinExchangeRes = toOtherCoin.exchange(fromOtherCoin.getESymbol(), toOtherCoinNum2);
 			otherCoinExchangeResStep++;
 		}
 		log.debug("otherCoinExchangeRes is " + otherCoinExchangeRes + " , runnum == " + otherCoinExchangeResStep);
 		// 获取另一平台 转换后币种的数量
-		float fromOtherCoinNum = fromOtherCoin.getCoinNum();
+		sleep(mySleepTime * 60);
+		double fromOtherCoinNum = fromOtherCoin.getCoinNum();
 		info.addInfo("fromOtherCoinNum", fromOtherCoinNum);
-		
+
 		// 提取转换后币种 到 当前平台
-		float otherWithdrawNum = DecimalUtil.decimalDown(fromOtherCoinNum, getToDigit());
+		double otherWithdrawNum = fromOtherCoinNum;
 		boolean otherWithdrawRes = fromOtherCoin.withdrawCoin(otherWithdrawNum, withdrawAdd);
 		int otherWithdrawResStep = 0;
 		while (!otherWithdrawRes) {
@@ -166,10 +169,10 @@ public abstract class AChange implements Ichange {
 		log.debug("otherWithdrawRes is " + otherWithdrawRes + " , runnum == " + otherWithdrawResStep);
 
 		// 查询 当前平台 是否收到 转换后的币种
-		float toCoinNum = toCoin.getCoinNum();
+		double toCoinNum = toCoin.getCoinNum();
 		info.addInfo("toCoinNum", toCoinNum);
-		float addToCoinNum = 0;
-		float toCoinNum2 = 0;
+		double addToCoinNum = 0;
+		double toCoinNum2 = 0;
 		while (addToCoinNum <= 0) {
 			sleep(sleepTime);
 			toCoinNum2 = toCoin.getCoinNum();
@@ -190,7 +193,8 @@ public abstract class AChange implements Ichange {
 		}
 		log.debug("toCoinSellRes is " + toCoinSellRes + " , runnum == " + toCoinSellResStep);
 		// 获取 当前平台 卖完转换后币种 的数量
-		float fromTotalNum2 = fromTotal.getCoinNum();
+		sleep(mySleepTime);
+		double fromTotalNum2 = fromTotal.getCoinNum();
 		info.addInfo("fromTotalNum2", fromTotalNum2);
 		// 计算盈利情况
 		String infoStr = getInfoStr(fromTotal, fromCoin, toOtherCoin, fromOtherCoin, toCoin,
@@ -198,8 +202,8 @@ public abstract class AChange implements Ichange {
 		info.addInfo(infoStr);
 		return info;
 	}
-	
-	private void sleep(long time){
+
+	private void sleep(long time) {
 		try {
 			Thread.sleep(time);
 		} catch (Exception e) {

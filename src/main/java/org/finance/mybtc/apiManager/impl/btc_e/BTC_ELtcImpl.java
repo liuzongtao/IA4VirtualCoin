@@ -51,7 +51,7 @@ public class BTC_ELtcImpl extends ABTC_ECoin {
 	 * apiManager.ESymbol, float)
 	 */
 	@Override
-	public boolean exchange(ESymbol toSymbol, float amount) {
+	public boolean exchange(ESymbol toSymbol, double amount) {
 		boolean result = false;
 		switch (toSymbol) {
 		case BTC:

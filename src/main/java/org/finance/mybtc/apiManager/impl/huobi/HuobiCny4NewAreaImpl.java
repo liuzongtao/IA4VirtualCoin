@@ -22,7 +22,7 @@ public class HuobiCny4NewAreaImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getBidAndAskPrice()
 	 */
 	@Override
-	public float[] getBidAndAskPrice(String pair) {
+	public double[] getBidAndAskPrice(String pair) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -33,8 +33,8 @@ public class HuobiCny4NewAreaImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getCoinNum()
 	 */
 	@Override
-	public float getCoinNum() {
-		float coinNum = 0;
+	public double getCoinNum() {
+		double coinNum = 0;
 		long accountId = getAccountId();
 		if (accountId == 0) {
 			return 0;
@@ -45,7 +45,7 @@ public class HuobiCny4NewAreaImpl extends AHuobiNewArea {
 			for (BalanceInfo tmpBalanceInfo : list) {
 				if (Strings.equals(BalanceInfo.CURRENCY_CNY, tmpBalanceInfo.getCurrency())
 						&& Strings.equals(BalanceInfo.TYPE_TRADE, tmpBalanceInfo.getType())) {
-					coinNum = Float.valueOf(tmpBalanceInfo.getBalance());
+					coinNum = Double.valueOf(tmpBalanceInfo.getBalance());
 				}
 			}
 		}
@@ -58,7 +58,7 @@ public class HuobiCny4NewAreaImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#buyMarket(float)
 	 */
 	@Override
-	public boolean buyMarket(ESymbol fromSymbol,float amount) {
+	public boolean buyMarket(ESymbol fromSymbol, double amount) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -69,7 +69,7 @@ public class HuobiCny4NewAreaImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#sellMarket(float)
 	 */
 	@Override
-	public boolean sellMarket(ESymbol toSymbol,float amount) {
+	public boolean sellMarket(ESymbol toSymbol, double amount) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -80,12 +80,14 @@ public class HuobiCny4NewAreaImpl extends AHuobiNewArea {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#withdrawCoin(float)
 	 */
 	@Override
-	public boolean withdrawCoin(float amount,String address) {
+	public boolean withdrawCoin(double amount, String address) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getESymbol()
 	 */
 	@Override

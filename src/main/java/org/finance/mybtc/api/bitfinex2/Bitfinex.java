@@ -126,7 +126,7 @@ public class Bitfinex {
 	}
 
 	@SuppressWarnings("unchecked")
-	public WithdrawResponse withdraw(String withdrawType, String wallet, float amount, String address)
+	public WithdrawResponse withdraw(String withdrawType, String wallet, double amount, String address)
 			throws BitfinexCallException {
 		WithdrawResponse res = null;
 		List<WithdrawResponse> list = (List<WithdrawResponse>) call(

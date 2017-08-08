@@ -24,7 +24,7 @@ public class Test4Allpf {
 
 	public static void main(String[] args) {
 		log.debug("args is " + Json.toJson(args, JsonFormat.compact()));
-		String pf = EPfType.huobi2btce.toString();
+		String pf = EPfType.okcoin2bitfinex.toString();
 		if (args.length > 0) {
 			pf = args[0].toLowerCase();
 		}

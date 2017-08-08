@@ -21,8 +21,8 @@ public class HuobiBtcImpl extends AHuobiBtcLtcCoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getCoinNum()
 	 */
 	@Override
-	public float getCoinNum() {
-		float coinNum = 0;
+	public double getCoinNum() {
+		double coinNum = 0;
 		try {
 			HuobiAccountInfo account = getAccount();
 			coinNum = account.getAvailable_btc_display();
@@ -38,8 +38,9 @@ public class HuobiBtcImpl extends AHuobiBtcLtcCoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#withdrawCoin(float)
 	 */
 	@Override
-	public boolean withdrawCoin(float amount, String address) {
-		WithdrawCoinResult result = withdrawCoin(amount - Const.HUOBI_BTC_WITHDRAW_FEE, address, Const.HUOBI_BTC_WITHDRAW_FEE);
+	public boolean withdrawCoin(double amount, String address) {
+		WithdrawCoinResult result = withdrawCoin(amount - Const.HUOBI_BTC_WITHDRAW_FEE, address,
+				Const.HUOBI_BTC_WITHDRAW_FEE);
 		if (result != null && result.getCode() == 200) {
 			return true;
 		}
@@ -55,8 +56,10 @@ public class HuobiBtcImpl extends AHuobiBtcLtcCoin {
 	public EHuobiCoinType getCoinType() {
 		return EHuobiCoinType.BTC;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getESymbol()
 	 */
 	@Override

@@ -14,11 +14,10 @@ import org.finance.mybtc.apiManager.IVirtualCoin;
 import org.finance.mybtc.apiManager.OkcoinFactory;
 import org.finance.mybtc.apiManager.impl.bitfinex.ABitfinexCoin;
 import org.finance.mybtc.change.bean.ChangeInfo;
-import org.finance.mybtc.change.impl4OkcoinAndBitfinex.Btc_LtcChangeImpl;
-import org.finance.mybtc.change.impl4OkcoinAndBitfinex.Ltc_BtcChangeImpl;
 import org.finance.mybtc.change.impl4OkcoinAndBitfinex.Btc_EthChangeImpl;
+import org.finance.mybtc.change.impl4OkcoinAndBitfinex.Btc_LtcChangeImpl;
 import org.finance.mybtc.change.impl4OkcoinAndBitfinex.Eth_BtcChangeImpl;
-import org.finance.mybtc.utils.DecimalUtil;
+import org.finance.mybtc.change.impl4OkcoinAndBitfinex.Ltc_BtcChangeImpl;
 import org.nutz.json.Json;
 import org.nutz.json.JsonFormat;
 
@@ -29,7 +28,7 @@ import org.nutz.json.JsonFormat;
 public class Okcoin2Bitfinex extends APfExchange {
 
 	@Override
-	public AChange preChange(float totalMoney, float wishProfit) {
+	public AChange preChange(double totalMoney, float wishProfit) {
 		AChange changeImpl = null;
 		OkcoinFactory okcoinFactory = OkcoinFactory.getInstance();
 		IVirtualCoin cnyInfo = okcoinFactory.getVirtualCoin(EOkcoinSymbols.CNY);
@@ -38,41 +37,41 @@ public class Okcoin2Bitfinex extends APfExchange {
 		}
 
 		IVirtualCoin btcInfo = okcoinFactory.getVirtualCoin(EOkcoinSymbols.BTC);
-		float[] okcoinBtcBidAndAskPrice = btcInfo.getBidAndAskPrice(EOkcoinSymbols.BTC.toString());
-		float btcSellPrice = okcoinBtcBidAndAskPrice[0];
-		float btcBuyPrice = okcoinBtcBidAndAskPrice[1];
+		double[] okcoinBtcBidAndAskPrice = btcInfo.getBidAndAskPrice(EOkcoinSymbols.BTC.toString());
+		double btcSellPrice = okcoinBtcBidAndAskPrice[0];
+		double btcBuyPrice = okcoinBtcBidAndAskPrice[1];
 		IVirtualCoin ltcInfo = okcoinFactory.getVirtualCoin(EOkcoinSymbols.LTC);
-		float[] okcoinLtcbidAndAskPrice = ltcInfo.getBidAndAskPrice(EOkcoinSymbols.LTC.toString());
-		float ltcSellPrice = okcoinLtcbidAndAskPrice[0];
-		float ltcBuyPrice = okcoinLtcbidAndAskPrice[1];
+		double[] okcoinLtcbidAndAskPrice = ltcInfo.getBidAndAskPrice(EOkcoinSymbols.LTC.toString());
+		double ltcSellPrice = okcoinLtcbidAndAskPrice[0];
+		double ltcBuyPrice = okcoinLtcbidAndAskPrice[1];
 		IVirtualCoin ethInfo = okcoinFactory.getVirtualCoin(EOkcoinSymbols.ETH);
-		float[] okcoinEthBidAndAskPrice = ethInfo.getBidAndAskPrice(EOkcoinSymbols.ETH.toString());
-		float ethSellPrice = okcoinEthBidAndAskPrice[0];
-		float ethBuyPrice = okcoinEthBidAndAskPrice[1];
+		double[] okcoinEthBidAndAskPrice = ethInfo.getBidAndAskPrice(EOkcoinSymbols.ETH.toString());
+		double ethSellPrice = okcoinEthBidAndAskPrice[0];
+		double ethBuyPrice = okcoinEthBidAndAskPrice[1];
 
 		// 获取bitfinex的价钱
 		BitfinexCoinFactory bitfinexFactory = BitfinexCoinFactory.getInstance();
 		ABitfinexCoin bitfinexBtcInfo = bitfinexFactory.getVirtualCoin(EBitfinexCurrencies.BTC);
-		float[] bitfinexLtcBtcBidAndAskPrice = bitfinexBtcInfo.getBidAndAskPrice(EBitfinexSymbols.LTCBTC);
+		double[] bitfinexLtcBtcBidAndAskPrice = bitfinexBtcInfo.getBidAndAskPrice(EBitfinexSymbols.LTCBTC);
 		if (bitfinexLtcBtcBidAndAskPrice == null) {
 			log.error("bitfinexBtcBidAndAskPrice is null");
 			return null;
 		}
-		float bitfinexBtc2LtcPrice = bitfinexLtcBtcBidAndAskPrice[0];
-		float bitfinexLtc2BtcPrice = 0;
+		double bitfinexBtc2LtcPrice = bitfinexLtcBtcBidAndAskPrice[0];
+		double bitfinexLtc2BtcPrice = 0;
 		if (bitfinexLtcBtcBidAndAskPrice[1] != 0) {
-			bitfinexLtc2BtcPrice = DecimalUtil.decimalDown(1 / bitfinexLtcBtcBidAndAskPrice[1], 5);
+			bitfinexLtc2BtcPrice = 1 / bitfinexLtcBtcBidAndAskPrice[1];
 		}
 
-		float[] bitfinexEthBtcBidAndAskPrice = bitfinexBtcInfo.getBidAndAskPrice(EBitfinexSymbols.ETHBTC);
+		double[] bitfinexEthBtcBidAndAskPrice = bitfinexBtcInfo.getBidAndAskPrice(EBitfinexSymbols.ETHBTC);
 		if (bitfinexEthBtcBidAndAskPrice == null) {
 			log.error("bitfinexBtcBidAndAskPrice is null");
 			return null;
 		}
-		float bitfinexBtc2EthPrice = bitfinexEthBtcBidAndAskPrice[0];
-		float bitfinexEth2BtcPrice = 0;
+		double bitfinexBtc2EthPrice = bitfinexEthBtcBidAndAskPrice[0];
+		double bitfinexEth2BtcPrice = 0;
 		if (bitfinexEthBtcBidAndAskPrice[1] != 0) {
-			bitfinexEth2BtcPrice = DecimalUtil.decimalDown(1 / bitfinexEthBtcBidAndAskPrice[1], 5);
+			bitfinexEth2BtcPrice = 1 / bitfinexEthBtcBidAndAskPrice[1];
 		}
 
 		Map<String, Object> profitInfo = new HashMap<String, Object>();
@@ -120,8 +119,11 @@ public class Okcoin2Bitfinex extends APfExchange {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.finance.mybtc.change.APfExchange#execExchangeByType(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.finance.mybtc.change.APfExchange#execExchangeByType(java.lang.String)
 	 */
 	@Override
 	public void execExchangeByType(String type) {
@@ -146,13 +148,11 @@ public class Okcoin2Bitfinex extends APfExchange {
 		default:
 			break;
 		}
-		if(execExchange == null){
+		if (execExchange == null) {
 			System.out.println("execExchange is null !");
-		}else{
+		} else {
 			System.out.println(Json.toJson(execExchange));
 		}
 	}
-	
-	
 
 }

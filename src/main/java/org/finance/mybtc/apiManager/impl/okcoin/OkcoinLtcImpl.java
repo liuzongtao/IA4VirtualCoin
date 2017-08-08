@@ -21,8 +21,8 @@ public class OkcoinLtcImpl extends AOkcoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getCoinNum()
 	 */
 	@Override
-	public float getCoinNum() {
-		float coinNum = 0;
+	public double getCoinNum() {
+		double coinNum = 0;
 		OkcoinUserInfo okcoinUserInfo = getOkcoinUserInfo();
 		if (okcoinUserInfo != null) {
 			OkcoinFundsInfo info = okcoinUserInfo.getInfo();

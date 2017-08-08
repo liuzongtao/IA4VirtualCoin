@@ -65,7 +65,7 @@ public class BitfinexBtcImpl extends ABitfinexCoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#exchange(java.lang.String, float)
 	 */
 	@Override
-	public boolean exchange(ESymbol toSymbol, float amount) {
+	public boolean exchange(ESymbol toSymbol, double amount) {
 		boolean result = false;
 		switch (toSymbol) {
 		case LTC:

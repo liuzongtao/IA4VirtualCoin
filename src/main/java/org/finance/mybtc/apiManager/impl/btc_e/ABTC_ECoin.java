@@ -41,12 +41,12 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getCoinNum()
 	 */
 	@Override
-	public float getCoinNum() {
-		float coinNum = 0;
+	public double getCoinNum() {
+		double coinNum = 0;
 		GetInfo info = getInfo();
 		if (info != null) {
 			String balance = info.getBalance(getSmybol().getValue());
-			coinNum = Float.valueOf(balance);
+			coinNum = Double.valueOf(balance);
 		}
 		return coinNum;
 	}
@@ -71,12 +71,12 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#getBidPrice()
 	 */
 	@Override
-	public float[] getBidAndAskPrice(String pair) {
-		float[] result = new float[2];
+	public double[] getBidAndAskPrice(String pair) {
+		double[] result = new double[2];
 		Ticker ticker = getTicker(EBTC_EPairType.valueOf(pair));
 		if (ticker != null) {
-			result[0] = Float.valueOf(ticker.getSell());
-			result[1] = Float.valueOf(ticker.getBuy());
+			result[0] = Double.valueOf(ticker.getSell());
+			result[1] = Double.valueOf(ticker.getBuy());
 		}
 		return result;
 	}
@@ -100,12 +100,12 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#buyMarket(float)
 	 */
 	@Override
-	public boolean buyMarket(ESymbol fromSymbol, float amount) {
+	public boolean buyMarket(ESymbol fromSymbol, double amount) {
 		boolean result = false;
 		EBTC_EPairType pair = getSellSmybol(fromSymbol);
-		float[] priceArr = getBidAndAskPrice(pair.toString());
+		double[] priceArr = getBidAndAskPrice(pair.toString());
 		Trade trade = trade(pair, "buy", 0.5f, (amount / priceArr[1]));
-		if (trade != null && Float.valueOf(trade.getReceived()) > 0) {
+		if (trade != null && Double.valueOf(trade.getReceived()) > 0) {
 			result = true;
 		}
 		return result;
@@ -117,11 +117,11 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#sellMarket(float)
 	 */
 	@Override
-	public boolean sellMarket(ESymbol toSymbol, float amount) {
+	public boolean sellMarket(ESymbol toSymbol, double amount) {
 		boolean result = false;
 		EBTC_EPairType pair = getSellSmybol(toSymbol);
 		Trade trade = trade(pair, "sell", 0.5f, amount);
-		if (trade != null && Float.valueOf(trade.getReceived()) > 0) {
+		if (trade != null && Double.valueOf(trade.getReceived()) > 0) {
 			result = true;
 		}
 		return result;
@@ -136,7 +136,7 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 	 * @param amount
 	 * @return
 	 */
-	private Trade trade(EBTC_EPairType pair, String type, float rate, float amount) {
+	private Trade trade(EBTC_EPairType pair, String type, float rate, double amount) {
 		client.trade.setPair(pair.getValue());
 		client.trade.setType(type);
 		client.trade.setRate(String.valueOf(rate));
@@ -151,7 +151,7 @@ public abstract class ABTC_ECoin implements IVirtualCoin {
 	 * @see org.finance.mybtc.apiManager.IVirtualCoin#withdrawCoin(float)
 	 */
 	@Override
-	public boolean withdrawCoin(float amount, String address) {
+	public boolean withdrawCoin(double amount, String address) {
 		client.withDrawCoin.setCoinName(getWithdrawType());
 		client.withDrawCoin.setAmount(String.valueOf(amount));
 		client.withDrawCoin.setaddress(address);

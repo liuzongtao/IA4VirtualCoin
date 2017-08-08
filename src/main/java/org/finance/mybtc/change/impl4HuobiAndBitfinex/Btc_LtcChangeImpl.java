@@ -71,11 +71,11 @@ public class Btc_LtcChangeImpl extends AHuobiChange {
 		HuobiCoinFactory huobiFactory = HuobiCoinFactory.getInstance();
 		// 获取当前人民币数量
 		IVirtualCoin huobiCny = huobiFactory.getVirtualCoin(EHuobiSymbol.CNY_OLD);
-		float huobiCnyNum = huobiCny.getCoinNum();
+		double huobiCnyNum = huobiCny.getCoinNum();
 		info.addInfo("huobiCnyNum", huobiCnyNum);
 		// 获取当前比特币数量
 		IVirtualCoin huobiBtc = huobiFactory.getVirtualCoin(EHuobiSymbol.BTC);
-		float huobiBtcNum = huobiBtc.getCoinNum();
+		double huobiBtcNum = huobiBtc.getCoinNum();
 		info.addInfo("huobiBtcNum", huobiBtcNum);
 		// 购买比特币
 		boolean huobiBuyBtc = huobiBtc.buyMarket(null, huobiCnyNum);
@@ -83,7 +83,7 @@ public class Btc_LtcChangeImpl extends AHuobiChange {
 			info.addErrorInfo("huobiBuyBtc is " + huobiBuyBtc);
 			return info;
 		}
-		float huobiBtcNum2 = huobiBtc.getCoinNum();
+		double huobiBtcNum2 = huobiBtc.getCoinNum();
 		info.addInfo("huobiBtcNum2", huobiBtcNum2);
 		// 进行提币
 		boolean huobiWithdrawBtcRes = huobiBtc.withdrawCoin((huobiBtcNum2 - huobiBtcNum),
@@ -97,11 +97,11 @@ public class Btc_LtcChangeImpl extends AHuobiChange {
 		BitfinexCoinFactory bitfinexFactory = BitfinexCoinFactory.getInstance();
 		// 获取当前bitfinex比特币的数量
 		IVirtualCoin bitfinexBtc = bitfinexFactory.getVirtualCoin(EBitfinexCurrencies.BTC);
-		float bitfinexBtcNum = bitfinexBtc.getCoinNum();
+		double bitfinexBtcNum = bitfinexBtc.getCoinNum();
 		info.addInfo("bitfinexBtcNum", bitfinexBtcNum);
 		// 查询bitfinex是否收到比特币
-		float addBitfinexBtcNum = 0;
-		float bitfinexBtcNum2 = 0;
+		double addBitfinexBtcNum = 0;
+		double bitfinexBtcNum2 = 0;
 		while (addBitfinexBtcNum <= 0) {
 			try {
 				Thread.sleep(sleepTime);
@@ -125,7 +125,7 @@ public class Btc_LtcChangeImpl extends AHuobiChange {
 		log.debug("bitfinexBtc2LtcRes is " + bitfinexBtc2LtcRes);
 		// 获取莱特币的数量
 		IVirtualCoin bitfinexLtc = bitfinexFactory.getVirtualCoin(EBitfinexCurrencies.LTC);
-		float bitfinexLtcNum = bitfinexLtc.getCoinNum();
+		double bitfinexLtcNum = bitfinexLtc.getCoinNum();
 		info.addInfo("bitfinexLtcNum", bitfinexLtcNum);
 		// 提取莱特币到火币网
 		boolean bitfinexWithdrawLtcRes = bitfinexBtc.withdrawCoin(bitfinexLtcNum,
@@ -138,10 +138,10 @@ public class Btc_LtcChangeImpl extends AHuobiChange {
 
 		// 查询火币网是否收到莱特币
 		IVirtualCoin huobiLtc = huobiFactory.getVirtualCoin(EHuobiSymbol.LTC);
-		float huobiLtcNum = huobiLtc.getCoinNum();
+		double huobiLtcNum = huobiLtc.getCoinNum();
 		info.addInfo("huobiLtcNum", huobiLtcNum);
-		float addhuobiLtcNum = 0;
-		float huobiLtcNum2 = 0;
+		double addhuobiLtcNum = 0;
+		double huobiLtcNum2 = 0;
 		while (addhuobiLtcNum <= 0) {
 			try {
 				Thread.sleep(sleepTime);
@@ -163,7 +163,7 @@ public class Btc_LtcChangeImpl extends AHuobiChange {
 		}
 		log.debug("huobiLtcSellRes is " + huobiLtcSellRes);
 		// 获取卖完后人民币的数量
-		float huobiCnyNum2 = huobiCny.getCoinNum();
+		double huobiCnyNum2 = huobiCny.getCoinNum();
 		info.addInfo("huobiCnyNum2", huobiCnyNum2);
 		// 计算盈利情况
 		info.addInfo("huobiBtc -> bitfinexBtc -> bitfinexLtc -> huobiLtc : profit is " + (huobiCnyNum2 - huobiCnyNum));

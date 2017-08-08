@@ -25,7 +25,7 @@ import org.nutz.json.JsonFormat;
 public class Okcoin2Btce extends APfExchange {
 
 	@Override
-	public AChange preChange(float totalMoney, float wishProfit) {
+	public AChange preChange(double totalMoney, float wishProfit) {
 		AChange changeImpl = null;
 		OkcoinFactory okcoinFactory = OkcoinFactory.getInstance();
 		IVirtualCoin cnyInfo = okcoinFactory.getVirtualCoin(EOkcoinSymbols.CNY);
@@ -34,17 +34,17 @@ public class Okcoin2Btce extends APfExchange {
 		}
 
 		IVirtualCoin btcInfo = okcoinFactory.getVirtualCoin(EOkcoinSymbols.BTC);
-		float[] okcoinBtcBidAndAskPrice = btcInfo.getBidAndAskPrice(EOkcoinSymbols.BTC.toString());
-		float btcSellPrice = okcoinBtcBidAndAskPrice[0];
-		float btcBuyPrice = okcoinBtcBidAndAskPrice[1];
+		double[] okcoinBtcBidAndAskPrice = btcInfo.getBidAndAskPrice(EOkcoinSymbols.BTC.toString());
+		double btcSellPrice = okcoinBtcBidAndAskPrice[0];
+		double btcBuyPrice = okcoinBtcBidAndAskPrice[1];
 		IVirtualCoin ltcInfo = okcoinFactory.getVirtualCoin(EOkcoinSymbols.LTC);
-		float[] okcoinLtcbidAndAskPrice = ltcInfo.getBidAndAskPrice(EOkcoinSymbols.LTC.toString());
-		float ltcSellPrice = okcoinLtcbidAndAskPrice[0];
-		float ltcBuyPrice = okcoinLtcbidAndAskPrice[1];
+		double[] okcoinLtcbidAndAskPrice = ltcInfo.getBidAndAskPrice(EOkcoinSymbols.LTC.toString());
+		double ltcSellPrice = okcoinLtcbidAndAskPrice[0];
+		double ltcBuyPrice = okcoinLtcbidAndAskPrice[1];
 		IVirtualCoin ethInfo = okcoinFactory.getVirtualCoin(EOkcoinSymbols.ETH);
-		float[] okcoinEthBidAndAskPrice = ethInfo.getBidAndAskPrice(EOkcoinSymbols.ETH.toString());
-		float ethSellPrice = okcoinEthBidAndAskPrice[0];
-		float ethBuyPrice = okcoinEthBidAndAskPrice[1];
+		double[] okcoinEthBidAndAskPrice = ethInfo.getBidAndAskPrice(EOkcoinSymbols.ETH.toString());
+		double ethSellPrice = okcoinEthBidAndAskPrice[0];
+		double ethBuyPrice = okcoinEthBidAndAskPrice[1];
 
 		ChangeManager changeManager = ChangeManager.getInstance();
 		Map<EBTC_EPairType, Float> priceMap = changeManager.getPriceFromBTC_E();
@@ -102,8 +102,11 @@ public class Okcoin2Btce extends APfExchange {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.finance.mybtc.change.APfExchange#execExchangeByType(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.finance.mybtc.change.APfExchange#execExchangeByType(java.lang.String)
 	 */
 	@Override
 	public void execExchangeByType(String type) {
@@ -128,13 +131,11 @@ public class Okcoin2Btce extends APfExchange {
 		default:
 			break;
 		}
-		if(execExchange == null){
+		if (execExchange == null) {
 			System.out.println("execExchange is null !");
-		}else{
+		} else {
 			System.out.println(Json.toJson(execExchange));
 		}
 	}
-	
-	
 
 }

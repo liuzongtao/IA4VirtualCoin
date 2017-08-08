@@ -12,23 +12,23 @@ public class OkcoinTicker {
 	/**
 	 * 买一价
 	 */
-	private float buy;
+	private double buy;
 	/**
 	 * 最高价
 	 */
-	private float high;
+	private double high;
 	/**
 	 * 最新成交价
 	 */
-	private float last;
+	private double last;
 	/**
 	 * 最低价
 	 */
-	private float low;
+	private double low;
 	/**
 	 * 卖一价
 	 */
-	private float sell;
+	private double sell;
 	/**
 	 * 成交量(最近的24小时)
 	 */
@@ -37,7 +37,7 @@ public class OkcoinTicker {
 	/**
 	 * @return the buy
 	 */
-	public float getBuy() {
+	public double getBuy() {
 		return buy;
 	}
 
@@ -45,14 +45,14 @@ public class OkcoinTicker {
 	 * @param buy
 	 *            the buy to set
 	 */
-	public void setBuy(float buy) {
+	public void setBuy(double buy) {
 		this.buy = buy;
 	}
 
 	/**
 	 * @return the high
 	 */
-	public float getHigh() {
+	public double getHigh() {
 		return high;
 	}
 
@@ -60,14 +60,14 @@ public class OkcoinTicker {
 	 * @param high
 	 *            the high to set
 	 */
-	public void setHigh(float high) {
+	public void setHigh(double high) {
 		this.high = high;
 	}
 
 	/**
 	 * @return the last
 	 */
-	public float getLast() {
+	public double getLast() {
 		return last;
 	}
 
@@ -75,14 +75,14 @@ public class OkcoinTicker {
 	 * @param last
 	 *            the last to set
 	 */
-	public void setLast(float last) {
+	public void setLast(double last) {
 		this.last = last;
 	}
 
 	/**
 	 * @return the low
 	 */
-	public float getLow() {
+	public double getLow() {
 		return low;
 	}
 
@@ -90,14 +90,14 @@ public class OkcoinTicker {
 	 * @param low
 	 *            the low to set
 	 */
-	public void setLow(float low) {
+	public void setLow(double low) {
 		this.low = low;
 	}
 
 	/**
 	 * @return the sell
 	 */
-	public float getSell() {
+	public double getSell() {
 		return sell;
 	}
 
@@ -105,7 +105,7 @@ public class OkcoinTicker {
 	 * @param sell
 	 *            the sell to set
 	 */
-	public void setSell(float sell) {
+	public void setSell(double sell) {
 		this.sell = sell;
 	}
 

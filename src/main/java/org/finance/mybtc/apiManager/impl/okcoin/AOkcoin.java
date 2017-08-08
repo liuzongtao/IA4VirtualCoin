@@ -40,8 +40,8 @@ public abstract class AOkcoin implements IVirtualCoin {
 	 * String)
 	 */
 	@Override
-	public float[] getBidAndAskPrice(String pair) {
-		float[] result = new float[2];
+	public double[] getBidAndAskPrice(String pair) {
+		double[] result = new double[2];
 		try {
 			String ticker = stockPost.ticker(getSmybol().getValue());
 			OkcoinTickerInfo info = Json.fromJson(OkcoinTickerInfo.class, ticker);
@@ -71,10 +71,10 @@ public abstract class AOkcoin implements IVirtualCoin {
 	 * 
 	 * @see
 	 * org.finance.mybtc.apiManager.IVirtualCoin#buyMarket(org.finance.mybtc.
-	 * apiManager.ESymbol, float)
+	 * apiManager.ESymbol, double)
 	 */
 	@Override
-	public boolean buyMarket(ESymbol fromSymbol, float amount) {
+	public boolean buyMarket(ESymbol fromSymbol, double amount) {
 		boolean result = false;
 		try {
 			String tradeResult = stockPost.trade(getSmybol().getValue(), "buy_market", String.valueOf(amount), null);
@@ -91,10 +91,10 @@ public abstract class AOkcoin implements IVirtualCoin {
 	 * 
 	 * @see
 	 * org.finance.mybtc.apiManager.IVirtualCoin#sellMarket(org.finance.mybtc.
-	 * apiManager.ESymbol, float)
+	 * apiManager.ESymbol, double)
 	 */
 	@Override
-	public boolean sellMarket(ESymbol toSymbol, float amount) {
+	public boolean sellMarket(ESymbol toSymbol, double amount) {
 		boolean result = false;
 		try {
 			String tradeResult = stockPost.trade(getSmybol().getValue(), "sell_market", null, String.valueOf(amount));
@@ -109,14 +109,14 @@ public abstract class AOkcoin implements IVirtualCoin {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.finance.mybtc.apiManager.IVirtualCoin#withdrawCoin(float,
+	 * @see org.finance.mybtc.apiManager.IVirtualCoin#withdrawCoin(double,
 	 * java.lang.String)
 	 */
 	@Override
-	public boolean withdrawCoin(float amount, String address) {
+	public boolean withdrawCoin(double amount, String address) {
 		boolean result = false;
 		try {
-			float withdrawFees = getWithdrawFees();
+			double withdrawFees = getWithdrawFees();
 			String withdrawResult = stockPost.withdraw(getSmybol().getValue(), String.valueOf(amount - withdrawFees),
 					String.valueOf(withdrawFees), Configs.API_CONFIG_OKCOIN.getTradePwd(), address);
 			OkcoinWithdraw withdraw = Json.fromJson(OkcoinWithdraw.class, withdrawResult);
@@ -132,10 +132,10 @@ public abstract class AOkcoin implements IVirtualCoin {
 	 * 
 	 * @see
 	 * org.finance.mybtc.apiManager.IVirtualCoin#exchange(org.finance.mybtc.
-	 * apiManager.ESymbol, float)
+	 * apiManager.ESymbol, double)
 	 */
 	@Override
-	public boolean exchange(ESymbol toSymbol, float amount) {
+	public boolean exchange(ESymbol toSymbol, double amount) {
 		return false;
 	}
 

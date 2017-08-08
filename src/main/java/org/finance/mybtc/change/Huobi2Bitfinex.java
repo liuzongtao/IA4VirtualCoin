@@ -18,7 +18,6 @@ import org.finance.mybtc.change.impl4HuobiAndBitfinex.Btc_EthChangeImpl;
 import org.finance.mybtc.change.impl4HuobiAndBitfinex.Btc_LtcChangeImpl;
 import org.finance.mybtc.change.impl4HuobiAndBitfinex.Eth_BtcChangeImpl;
 import org.finance.mybtc.change.impl4HuobiAndBitfinex.Ltc_BtcChangeImpl;
-import org.finance.mybtc.utils.DecimalUtil;
 import org.nutz.json.Json;
 import org.nutz.json.JsonFormat;
 
@@ -29,7 +28,7 @@ import org.nutz.json.JsonFormat;
 public class Huobi2Bitfinex extends APfExchange {
 
 	@Override
-	public AChange preChange(float totalMoney,float wishProfit) {
+	public AChange preChange(double totalMoney, float wishProfit) {
 		AChange changeImpl = null;
 		HuobiCoinFactory huobiFactory = HuobiCoinFactory.getInstance();
 		IVirtualCoin cnyInfo = huobiFactory.getVirtualCoin(EHuobiSymbol.CNY_OLD);
@@ -38,26 +37,26 @@ public class Huobi2Bitfinex extends APfExchange {
 		}
 
 		IVirtualCoin btcInfo = huobiFactory.getVirtualCoin(EHuobiSymbol.BTC);
-		float[] huobiBtcBidAndAskPrice = btcInfo.getBidAndAskPrice(EHuobiSymbol.BTC.toString());
-		float btcSellPrice = huobiBtcBidAndAskPrice[0];
-		float btcBuyPrice = huobiBtcBidAndAskPrice[1];
+		double[] huobiBtcBidAndAskPrice = btcInfo.getBidAndAskPrice(EHuobiSymbol.BTC.toString());
+		double btcSellPrice = huobiBtcBidAndAskPrice[0];
+		double btcBuyPrice = huobiBtcBidAndAskPrice[1];
 		IVirtualCoin ltcInfo = huobiFactory.getVirtualCoin(EHuobiSymbol.LTC);
-		float[] huobiLtcbidAndAskPrice = ltcInfo.getBidAndAskPrice(EHuobiSymbol.LTC.toString());
-		float ltcSellPrice = huobiLtcbidAndAskPrice[0];
-		float ltcBuyPrice = huobiLtcbidAndAskPrice[1];
+		double[] huobiLtcbidAndAskPrice = ltcInfo.getBidAndAskPrice(EHuobiSymbol.LTC.toString());
+		double ltcSellPrice = huobiLtcbidAndAskPrice[0];
+		double ltcBuyPrice = huobiLtcbidAndAskPrice[1];
 
 		// 获取bitfinex的价钱
 		BitfinexCoinFactory bitfinexFactory = BitfinexCoinFactory.getInstance();
 		ABitfinexCoin bitfinexBtcInfo = bitfinexFactory.getVirtualCoin(EBitfinexCurrencies.BTC);
-		float[] bitfinexBtcBidAndAskPrice = bitfinexBtcInfo.getBidAndAskPrice(EBitfinexSymbols.LTCBTC);
+		double[] bitfinexBtcBidAndAskPrice = bitfinexBtcInfo.getBidAndAskPrice(EBitfinexSymbols.LTCBTC);
 		if (bitfinexBtcBidAndAskPrice == null) {
 			log.error("bitfinexBtcBidAndAskPrice is null");
 			return null;
 		}
-		float bitfinexBtcSellPrice = bitfinexBtcBidAndAskPrice[0];
-		float bitfinexBtcBuyPrice = 0;
+		double bitfinexBtcSellPrice = bitfinexBtcBidAndAskPrice[0];
+		double bitfinexBtcBuyPrice = 0;
 		if (bitfinexBtcBidAndAskPrice[1] != 0) {
-			bitfinexBtcBuyPrice = DecimalUtil.decimalDown(1 / bitfinexBtcBidAndAskPrice[1], 5);
+			bitfinexBtcBuyPrice = 1 / bitfinexBtcBidAndAskPrice[1];
 		}
 
 		Map<String, Object> profitInfo = new HashMap<String, Object>();
@@ -89,8 +88,11 @@ public class Huobi2Bitfinex extends APfExchange {
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.finance.mybtc.change.APfExchange#execExchangeByType(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.finance.mybtc.change.APfExchange#execExchangeByType(java.lang.String)
 	 */
 	@Override
 	public void execExchangeByType(String type) {
@@ -115,14 +117,12 @@ public class Huobi2Bitfinex extends APfExchange {
 		default:
 			break;
 		}
-		if(execExchange == null){
+		if (execExchange == null) {
 			System.out.println("execExchange is null !");
-		}else{
+		} else {
 			System.out.println(Json.toJson(execExchange));
 		}
-		
+
 	}
-	
-	
 
 }

@@ -14,14 +14,14 @@ public interface IVirtualCoin {
 	 * 
 	 * @return
 	 */
-	public float[] getBidAndAskPrice(String pair);
+	public double[] getBidAndAskPrice(String pair);
 
 	/**
 	 * 获取当前拥有的数量
 	 * 
 	 * @return
 	 */
-	public float getCoinNum();
+	public double getCoinNum();
 
 	/**
 	 * 市价买入
@@ -29,7 +29,7 @@ public interface IVirtualCoin {
 	 * @param amount
 	 * @return
 	 */
-	public boolean buyMarket(ESymbol fromSymbol,float amount);
+	public boolean buyMarket(ESymbol fromSymbol,double amount);
 
 	/**
 	 * 市价卖出
@@ -37,7 +37,7 @@ public interface IVirtualCoin {
 	 * @param amount
 	 * @return
 	 */
-	public boolean sellMarket(ESymbol toSymbol,float amount);
+	public boolean sellMarket(ESymbol toSymbol,double amount);
 
 	/**
 	 * 提币
@@ -45,7 +45,7 @@ public interface IVirtualCoin {
 	 * @param amount
 	 * @return
 	 */
-	public boolean withdrawCoin(float amount,String address);
+	public boolean withdrawCoin(double amount,String address);
 	
 	
 	/**
@@ -54,7 +54,7 @@ public interface IVirtualCoin {
 	 * @param amount
 	 * @return
 	 */
-	public boolean exchange(ESymbol toSymbol,float amount);
+	public boolean exchange(ESymbol toSymbol,double amount);
 	
 	/**
 	 * @return
