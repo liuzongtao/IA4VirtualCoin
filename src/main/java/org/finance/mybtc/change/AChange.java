@@ -140,7 +140,7 @@ public abstract class AChange implements Ichange {
 				info.addInfo("addToOtherCoinNum", addToOtherCoinNum);
 			}
 		}
-		
+
 		// 在另一平台进行 币种转换
 		boolean otherCoinExchangeRes = toOtherCoin.exchange(fromOtherCoin.getESymbol(), toOtherCoinNum2);
 		int otherCoinExchangeResStep = 0;
@@ -153,6 +153,14 @@ public abstract class AChange implements Ichange {
 		log.debug("otherCoinExchangeRes is " + otherCoinExchangeRes + " , runnum == " + otherCoinExchangeResStep);
 		// 获取另一平台 转换后币种的数量
 		sleep(mySleepTime * 60);
+		toOtherCoinNum = toOtherCoin.getCoinNum();
+		int waitExchangeStep = 0;
+		while (!(toOtherCoinNum >= 0 && toOtherCoinNum < 0.0001)) {
+			sleep(mySleepTime);
+			toOtherCoinNum = toOtherCoin.getCoinNum();
+			log.debug("toOtherCoinNum is " + toOtherCoinNum + " , runnum == " + waitExchangeStep);
+			waitExchangeStep++;
+		}
 		double fromOtherCoinNum = fromOtherCoin.getCoinNum();
 		info.addInfo("fromOtherCoinNum", fromOtherCoinNum);
 

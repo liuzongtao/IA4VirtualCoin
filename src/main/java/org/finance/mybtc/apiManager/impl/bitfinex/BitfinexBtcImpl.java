@@ -42,6 +42,10 @@ public class BitfinexBtcImpl extends ABitfinexCoin {
 	public EBitfinexSymbols getSellSmybol(ESymbol toSymbol) {
 		if(toSymbol == ESymbol.USD){
 			return EBitfinexSymbols.BTCUSD;
+		}else if(toSymbol == ESymbol.LTC){
+			return EBitfinexSymbols.LTCBTC;
+		}else if(toSymbol == ESymbol.ETH){
+			return EBitfinexSymbols.ETHBTC;
 		}
 		return null;
 	}

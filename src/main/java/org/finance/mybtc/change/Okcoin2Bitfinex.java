@@ -93,21 +93,21 @@ public class Okcoin2Bitfinex extends APfExchange {
 			maxProfit = l2bProfit;
 		}
 
-		Btc_EthChangeImpl b2eImpl = new Btc_EthChangeImpl();
-		float b2eProfit = b2eImpl.preChange(totalMoney, btcBuyPrice, ethSellPrice, bitfinexBtc2EthPrice);
-		profitInfo.put("b2eProfit", b2eProfit);
-		if (b2eProfit > maxProfit) {
-			changeImpl = b2eImpl;
-			maxProfit = b2eProfit;
-		}
-
-		Eth_BtcChangeImpl e2bimpl = new Eth_BtcChangeImpl();
-		float e2bProfit = e2bimpl.preChange(totalMoney, ethBuyPrice, btcSellPrice, bitfinexEth2BtcPrice);
-		profitInfo.put("e2bProfit", e2bProfit);
-		if (e2bProfit > maxProfit) {
-			changeImpl = e2bimpl;
-			maxProfit = e2bProfit;
-		}
+//		Btc_EthChangeImpl b2eImpl = new Btc_EthChangeImpl();
+//		float b2eProfit = b2eImpl.preChange(totalMoney, btcBuyPrice, ethSellPrice, bitfinexBtc2EthPrice);
+//		profitInfo.put("b2eProfit", b2eProfit);
+//		if (b2eProfit > maxProfit) {
+//			changeImpl = b2eImpl;
+//			maxProfit = b2eProfit;
+//		}
+//
+//		Eth_BtcChangeImpl e2bimpl = new Eth_BtcChangeImpl();
+//		float e2bProfit = e2bimpl.preChange(totalMoney, ethBuyPrice, btcSellPrice, bitfinexEth2BtcPrice);
+//		profitInfo.put("e2bProfit", e2bProfit);
+//		if (e2bProfit > maxProfit) {
+//			changeImpl = e2bimpl;
+//			maxProfit = e2bProfit;
+//		}
 
 		log.debug(Json.toJson(profitInfo, JsonFormat.compact()));
 		log.info(profitInfo.get("b2lProfit") + " , " + profitInfo.get("l2bProfit") + " , " + profitInfo.get("b2eProfit")

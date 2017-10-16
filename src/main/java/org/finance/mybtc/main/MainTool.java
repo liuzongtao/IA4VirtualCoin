@@ -36,7 +36,7 @@ public class MainTool {
 		if (args.length > 2) {
 			isTest = Boolean.valueOf(args[2]);
 		}
-		float wishProfit = 0.5f;
+		float wishProfit = 1.5f;
 		if (args.length > 3) {
 			wishProfit = Float.valueOf(args[3]);
 		}
